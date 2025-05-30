@@ -1,0 +1,45 @@
+{
+  "name": "color-contrast",
+  "version": "1.0.0",
+  "description": "Let the browser do the work for you with color-contrast()",
+  "main": "code.js",
+  "scripts": {
+    "build": "esbuild src/code.ts --bundle --outfile=dist/code.js",
+    "dev": "npm run build -- --watch",
+    "lint": "eslint --ext .ts,.tsx --ignore-pattern node_modules .",
+    "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix ."
+  },
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@figma/eslint-plugin-figma-plugins": "*",
+    "@figma/plugin-typings": "^1.113.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "esbuild": "^0.25.5",
+    "eslint": "^8.57.1",
+    "typescript": "^5.8.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@figma/figma-plugins/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "root": true,
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_"
+        }
+      ]
+    }
+  }
+}

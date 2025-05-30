@@ -1,0 +1,20 @@
+{
+  "name": "color-contrast()",
+  "id": "1510374130417266196",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "documentAccess": "dynamic-page",
+  "editorType": [
+    "figma"
+  ],
+  "ui": {
+    "welcome": "ui/welcome.html"
+  },
+  "networkAccess": {
+    "allowedDomains": [
+      "none"
+    ]
+  }
+}
