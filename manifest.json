@@ -10,7 +10,7 @@
     "figma"
   ],
   "ui": {
-    "welcome": "ui/welcome.html"
+    "welcome": "dist/ui/welcome.html"
   },
   "networkAccess": {
     "allowedDomains": [
