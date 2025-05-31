@@ -23,8 +23,16 @@ main > div {
 }
 
 h1 {
-  text-align: left;
+  text-align: center;
   margin-bottom: 0.5rem;
+}
+
+h2 {
+  margin-bottom: 0;
+}
+
+ul {
+  margin: 0;
 }
 
 hgroup p {
@@ -54,3 +62,40 @@ button {
 button:hover {
   background-color: var(--figma-color-bg-brand-hover);
 } 
+
+.details {
+  display: flex;
+  gap: 1rem;
+}
+
+.swatch-visual {
+  height: 100px;
+  width: 100px;
+  border-radius: 8px;
+}
+
+.swatch-visual.small {
+  height: 20px;
+  width: 20px;
+}
+
+#text-color-white .swatch-visual {
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
+}
+
+#text-color-black .swatch-visual {
+  background-color: #000000;
+  border: 1px solid #FFFFFF;
+}
+
+.swatch-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.swatch-details #hex {
+  font-size: 2rem;
+  font-weight: 600;
+}

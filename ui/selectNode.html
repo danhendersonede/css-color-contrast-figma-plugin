@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Node</title>
+  </head>
+  <body>
+    <main>
+      <hgroup>
+        <h1>Select Node</h1>
+        <p>Select a text node to get started</p>
+      </hgroup>
+
+      <div class="details">
+        <div class="swatch-visual"></div>
+        <div class="swatch-details">
+          <span id="hex"></span>
+          <div id="text-color-white"><div class="swatch-visual small"></div><span class="contrast-ratio"></span></div>
+          <div id="text-color-black"><div class="swatch-visual small"></div><span class="contrast-ratio"></span></div>
+        </div>
+      </div>
+      
+
+
+      <h2>Node Information</h2>
+      <ul>
+        <li id="selectedNode">No text node selected</li>
+        <li id="parentNode">No parent node selected</li>
+      </ul>
+    </main>
+    <script>
+      window.onmessage = (event) => {
+        const data = event.data.pluginMessage;
+        if (data.type === 'SELECTION_CHANGE') {
+          console.log("DATA", data);
+
+          // If no node is selected
+          if (data.selectedNode.id === null) {
+            document.getElementById('selectedNode').textContent = 'No text node selected';
+            return;
+          }
+
+          // If a single node is selected
+          if (data.selectedNode.type === 'TEXT') {
+            document.getElementById('selectedNode').textContent = "Selected";
+          } else {
+            document.getElementById('selectedNode').textContent = 'Selected node is not a text node';
+          }
+
+          // If a parent node is selected
+          if (data.parentNode.id === null) {
+            document.getElementById('parentNode').textContent = 'No parent node selected';
+            return;
+          }
+
+          // If a parent node is selected
+          if (data.parentNode.type === 'FRAME' || data.parentNode.type === 'RECTANGLE' || data.parentNode.type === 'COMPONENT') {
+            document.getElementById('parentNode').textContent = 'Parent node is a frame, rectangle, or component';
+            document.querySelector('.swatch-visual').style.backgroundColor = data.parentNode.fillColor;
+            document.querySelector('#hex').textContent = data.parentNode.fillColor;
+          } else {
+            document.getElementById('parentNode').textContent = 'Parent node is not a frame, rectangle, or component';
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

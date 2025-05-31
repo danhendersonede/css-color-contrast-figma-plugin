@@ -8,7 +8,7 @@
   <body>
     <main>
       <hgroup>
-        <h1>colorr-contrast()</h1>
+        <h1>color-contrast()</h1>
         <p>Not another color contrast checker</p>
       </hgroup>
 
@@ -18,16 +18,11 @@
 
       <a id="learn" href="https://webkit.org/blog/16929/contrast-color/" target="_blank" rel="noopener noreferrer">Learn more</a>
       <button id="start">Start</button> 
+      <a href="selectNode.html">Start</a> 
     </main>
-    <script>
-      document.getElementById('create').onclick = () => {
-        const textbox = document.getElementById('count');
-        const count = parseInt(textbox.value, 10);
-        parent.postMessage({ pluginMessage: { type: 'create-shapes', count } }, '*')
-      }
-      
-      document.getElementById('cancel').onclick = () => {
-        parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+    <script>      
+      document.getElementById('start').onclick = () => {
+        parent.postMessage({ pluginMessage: { type: 'start' } }, '*')
       }  
     </script>
   </body>
