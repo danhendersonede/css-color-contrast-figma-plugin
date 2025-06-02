@@ -1,12 +1,30 @@
-import { RGBToHex } from "./utils";
+import { calculateContrastRatio, clone, RGBToHex } from "./utils";
+
+function hexToRGB(hex: string): RGB {
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+  return { r, g, b };
+}
 
 showUI(__uiFiles__.welcome);
 
 // Handle messages from the UI
-figma.ui.onmessage = (msg: { type: string; count: number }) => {
+figma.ui.onmessage = async (msg: { type: string; count: number, data: unknown }) => {
   if (msg.type === 'start') {
     showUI(__uiFiles__.selectNode);
     handleSelectionChange();
+  }
+  if (msg.type === 'APPLY_COLOR_CONTRAST') {
+    const data = msg.data as {nodeId: string, nodeType: string, fillColor: string};
+    const node = await figma.getNodeByIdAsync(data.nodeId);
+    if (node && 'fills' in node) {
+      const fills = clone(node.fills) as Array<SolidPaint & { color: RGB }>;
+      if (fills.length > 0 && fills[0].type === 'SOLID') {
+        fills[0].color = hexToRGB(data.fillColor);
+        node.fills = fills;
+      }
+    }
   }
 
   if (msg.type === 'closePlugin') {
@@ -34,38 +52,6 @@ function parentHasFills(node: BaseNode): node is (FrameNode | RectangleNode | Co
          Array.isArray((node as { fills: readonly Paint[] }).fills);
 }
 
-// Convert hex to RGB
-function hexToRgb(hex: string): { r: number; g: number; b: number } {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : { r: 0, g: 0, b: 0 };
-}
-
-// Calculate relative luminance
-function getLuminance(r: number, g: number, b: number): number {
-  const [rs, gs, bs] = [r, g, b].map(c => {
-    c = c / 255;
-    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-  });
-  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-}
-
-function calculateContrastRatio(color: string, backgroundColor: string): number {
-  const colorRgb = hexToRgb(color);
-  const bgRgb = hexToRgb(backgroundColor);
-  
-  const colorLuminance = getLuminance(colorRgb.r, colorRgb.g, colorRgb.b);
-  const bgLuminance = getLuminance(bgRgb.r, bgRgb.g, bgRgb.b);
-  
-  const lighter = Math.max(colorLuminance, bgLuminance);
-  const darker = Math.min(colorLuminance, bgLuminance);
-  
-  return (lighter + 0.05) / (darker + 0.05);
-}
-
 function handleSelectionChange(): SceneNode | null {
   const node = figma.currentPage.selection[0];
 
@@ -85,8 +71,8 @@ function handleSelectionChange(): SceneNode | null {
     const fill = parentNode.fills[0];
     if (fill.type === 'SOLID') {
       parentNodeFillColor = RGBToHex(fill.color.r, fill.color.g, fill.color.b);
-      parentNodeColorContrast.white = calculateContrastRatio(parentNodeFillColor, '#FFFFFF');
-      parentNodeColorContrast.black = calculateContrastRatio(parentNodeFillColor, '#000000');
+      parentNodeColorContrast.white = calculateContrastRatio({ r: fill.color.r, g: fill.color.g, b: fill.color.b }, { r: 1, g: 1, b: 1 });
+      parentNodeColorContrast.black = calculateContrastRatio({ r: fill.color.r, g: fill.color.g, b: fill.color.b }, { r: 0, g: 0, b: 0 });
     }
   }
 

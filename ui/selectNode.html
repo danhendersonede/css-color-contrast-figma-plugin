@@ -16,12 +16,12 @@
         <div class="swatch-visual"></div>
         <div class="swatch-details">
           <span id="hex"></span>
-          <div id="text-color-white"><div class="swatch-visual small"></div><span class="contrast-ratio"></span></div>
-          <div id="text-color-black"><div class="swatch-visual small"></div><span class="contrast-ratio"></span></div>
+          <div class="contrast-ratio" id="text-color-white"><div class="swatch-visual small"></div><span class="value"></span></div>
+          <div class="contrast-ratio" id="text-color-black"><div class="swatch-visual small"></div><span class="value"></span></div>
         </div>
       </div>
-      
 
+      <button id="apply-color-contrast">Use color-contrast()</button>
 
       <h2>Node Information</h2>
       <ul>
@@ -30,10 +30,18 @@
       </ul>
     </main>
     <script>
-      window.onmessage = (event) => {
+      let contrastWhite = null;
+      let contrastBlack = null;
+      let selectedNodeData = null;
+      let parentNodeData = null;
+
+      window.onmessage = async (event) => {
         const data = event.data.pluginMessage;
         if (data.type === 'SELECTION_CHANGE') {
           console.log("DATA", data);
+          
+          selectedNodeData = data.selectedNode;
+          parentNodeData = data.parentNode;
 
           // If no node is selected
           if (data.selectedNode.id === null) {
@@ -57,13 +65,60 @@
           // If a parent node is selected
           if (data.parentNode.type === 'FRAME' || data.parentNode.type === 'RECTANGLE' || data.parentNode.type === 'COMPONENT') {
             document.getElementById('parentNode').textContent = 'Parent node is a frame, rectangle, or component';
-            document.querySelector('.swatch-visual').style.backgroundColor = data.parentNode.fillColor;
-            document.querySelector('#hex').textContent = data.parentNode.fillColor;
+            
+            if (data.parentNode.fillColor) {
+              const swatchVisual = document.querySelector('.swatch-visual');
+              const hexElement = document.querySelector('#hex');
+              swatchVisual.style.backgroundColor = data.parentNode.fillColor;
+              hexElement.textContent = data.parentNode.fillColor;
+
+              try {
+                // Calculate contrast ratios
+                contrastWhite = data.parentNode.colorContrast.white;
+                contrastBlack = data.parentNode.colorContrast.black;
+
+                if (contrastWhite > contrastBlack) {
+                  document.querySelector('#text-color-white .value').classList.add('largest');
+                  document.querySelector('#text-color-black .value').classList.remove('largest');
+                } else {
+                  document.querySelector('#text-color-black .value').classList.add('largest');
+                  document.querySelector('#text-color-white .value').classList.remove('largest');
+                }
+
+                // Update the UI with contrast values
+                document.querySelector('#text-color-white .value').textContent = 
+                  `${contrastWhite.toFixed(2)}:1`;
+                document.querySelector('#text-color-black .value').textContent = 
+                  `${contrastBlack.toFixed(2)}:1`;
+
+                // Set the background colors for the small swatches
+                document.querySelector('#text-color-white .swatch-visual').style.backgroundColor = '#FFFFFF';
+                document.querySelector('#text-color-black .swatch-visual').style.backgroundColor = '#000000';
+              } catch (error) {
+                console.error('Error calculating contrast:', error);
+              }
+            }
           } else {
             document.getElementById('parentNode').textContent = 'Parent node is not a frame, rectangle, or component';
           }
         }
       };
+
+      document.getElementById('apply-color-contrast').addEventListener('click', () => {
+        if (!parentNodeData) {
+          console.error('No parent node data available');
+          return;
+        }
+
+        parent.postMessage({ pluginMessage: {
+          type: 'APPLY_COLOR_CONTRAST',
+          data: {
+            nodeId: selectedNodeData.id,
+            nodeType: selectedNodeData.type,
+            fillColor: contrastWhite > contrastBlack ? '#FFFFFF' : '#000000',
+          }
+        }}, '*');
+      });
     </script>
   </body>
 </html>

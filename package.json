@@ -47,5 +47,8 @@
         }
       ]
     }
+  },
+  "dependencies": {
+    "colorjs.io": "^0.5.2"
   }
 }
