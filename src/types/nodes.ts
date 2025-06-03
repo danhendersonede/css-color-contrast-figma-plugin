@@ -33,10 +33,22 @@ export type PluginData = {
   containerNodeData: ContainerNodeData | null;
 }
 
-export type ContainerNode = (FrameNode | ComponentNode | InstanceNode)
+export type ContainerNode = 
+  | FrameNode 
+  | ComponentNode 
+  | InstanceNode 
+  | GroupNode 
+  | SectionNode;
 
 export function isContainerNode(node: BaseNode | null): node is ContainerNode {
-  return node !== null && ['FRAME', 'COMPONENT', 'INSTANCE'].includes(node.type);
+  if (!node) return false;
+  return (
+    node.type === 'FRAME' ||
+    node.type === 'COMPONENT' ||
+    node.type === 'INSTANCE' ||
+    node.type === 'GROUP' ||
+    node.type === 'SECTION'
+  );
 }
 
 export function isTextNode(node: BaseNode | null): node is TextNode {

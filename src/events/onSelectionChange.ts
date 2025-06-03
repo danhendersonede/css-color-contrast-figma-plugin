@@ -2,7 +2,6 @@ import { handleContainerNodeSelection } from "./selectionChangeHandlers/handleCo
 import { handleTextNodeSelection } from "./selectionChangeHandlers/handleTextNodeSelection";
 import { handleNoNodeSelected } from "./selectionChangeHandlers/handleNoNodeSelected";
 import { isContainerNode, isTextNode } from "../types/nodes";
-import { handleOtherNodeSelection } from "./selectionChangeHandlers/handleOtherNodeSelection";
 
 export function onSelectionChange(): void {
     const node = figma.currentPage.selection[0] as SceneNode;
@@ -21,6 +20,4 @@ export function onSelectionChange(): void {
         handleContainerNodeSelection(node);
         return;
     } 
-    
-    handleOtherNodeSelection(node);
 }

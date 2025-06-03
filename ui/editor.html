@@ -114,7 +114,7 @@
             newColorSwatchWhiteContrastRatioElement.classList.remove('largest');
           }
         }
-        if (data.type === 'SELECTION_CHANGE_NO_NODE_SELECTED' || data.type === 'SELECTION_CHANGE_OTHER_NODE') {
+        if (data.type === 'SELECTION_CHANGE_NO_NODE_SELECTED') {
           editorContentElement.classList.add('hidden');
           errorMessageElement.classList.remove('hidden');
           errorMessageElement.textContent = 'Select a text layer to get started.';

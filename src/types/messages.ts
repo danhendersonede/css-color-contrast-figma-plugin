@@ -1,4 +1,4 @@
-import { BaseNodeData, ContainerNodeData, TextNodeData } from "./nodes";
+import { ContainerNodeData, TextNodeData } from "./nodes";
 
 // Message types that can be sent from UI to plugin
 export type UIToPluginMessage = 
@@ -25,6 +25,9 @@ export type PluginToUIMessage =
       type: 'SELECTION_CHANGE_NO_NODE_SELECTED';
     }
   | {
-      type: 'SELECTION_CHANGE_OTHER_NODE';
-      nodeData: BaseNodeData;
-  };
+      type: 'UPDATE_COMPLETE';
+      updatedNodes: number;
+      disabledNodes: number;
+      totalNodes: number;
+      error?: string;
+    };
