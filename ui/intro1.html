@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>color-contrast()</title>
+  </head>
+  <body>
+    <main>
+      <hgroup>
+        <p>Intro: 1 of 4</p>
+        <h1>Before you start!</h1>
+      </hgroup>
+
+      <p><code>color-contrast()</code> is an experimental CSS function that picks either black or white, depending on which has better contrast on a background color.</p>
+
+      <p>This plugin is a tool to help you explore how it could shape the future of design.</p>
+
+      <button id="start">Continue</button> 
+    </main>
+    <script>      
+      document.getElementById('start').onclick = () => {
+        parent.postMessage({ pluginMessage: { 
+          type: 'NAVIGATE',
+          route: 'intro2',
+          fromRoute: 'intro1'
+        } }, '*')
+      }  
+    </script>
+  </body>
+</html>

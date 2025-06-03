@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Node</title>
+  </head>
+  <body>
+    <main id="editor">
+      <nav>
+        <h1>Editor</h1>
+        <button id="help-button">Help</button>
+      </nav>
+
+      <p id="error-message" class="hidden">Select a text layer to get started.</p>
+
+      <div id="editor-content">
+        <div id="background-color" class="group">
+          <h2>Background Color</h2>
+          <div class="swatch">
+            <div class="swatch-visual"></div>
+            <div class="swatch-details">
+              <span class="main-value"></span>
+              <span class="sub-value"></span>
+            </div>
+          </div>
+        </div>
+
+        <div id="text-color" class="group">
+          <h2>Text Color</h2>
+          <h3>Current color</h3>
+          <div id="current-color" class="swatch">
+            <div class="swatch-visual small"></div>
+            <div class="swatch-details">
+              <span class="main-value"></span>
+              <span class="sub-value"></span>
+            </div>
+          </div>
+
+          <h3>New color with color-contrast()</h3>
+          <div id="new-color-swatch">
+            <div id="new-color-swatch-visual-white" class="swatch-visual">#FFFFFF</div>
+            <div id="new-color-swatch-details">
+              <span id="new-color-swatch-white-contrast-ratio" class="new-color-swatch-value">-</span>
+              <span>vs</span>
+              <span id="new-color-swatch-black-contrast-ratio" class="new-color-swatch-value">-</span>
+            </div>
+            <div id="new-color-swatch-visual-black" class="swatch-visual">#000000</div>
+          </div>
+        </div>
+
+        <button id="apply-color-contrast">Switch to color-contrast()</button>
+    </div>
+    </main>
+    <script>
+      let contrastWhite = null;
+      let contrastBlack = null;
+      let textNodeData = null;
+      let containerNodeData = null;
+
+      const editorContentElement = document.querySelector('#editor-content');
+      
+      const backgroundColorGroup = document.querySelector('#background-color');
+      const backgroundSwatchVisualElement = backgroundColorGroup.querySelector('.swatch-visual');
+      const backgroundMainValueElement = backgroundColorGroup.querySelector('.main-value');
+      const backgroundSubValueElement = backgroundColorGroup.querySelector('.sub-value');
+
+      const textColorGroup = document.querySelector('#text-color');
+      const textSwatchVisualElement = textColorGroup.querySelector('.swatch-visual');
+      const textMainValueElement = textColorGroup.querySelector('.main-value');
+      const textSubValueElement = textColorGroup.querySelector('.sub-value');
+
+      const newColorSwatchElement = document.querySelector('#new-color-swatch');
+      const newColorSwatchVisualWhiteElement = newColorSwatchElement.querySelector('#new-color-swatch-visual-white');
+      const newColorSwatchVisualBlackElement = newColorSwatchElement.querySelector('#new-color-swatch-visual-black');
+      const newColorSwatchDetailsElement = newColorSwatchElement.querySelector('#new-color-swatch-details');
+      const newColorSwatchWhiteContrastRatioElement = newColorSwatchElement.querySelector('#new-color-swatch-white-contrast-ratio');
+      const newColorSwatchBlackContrastRatioElement = newColorSwatchElement.querySelector('#new-color-swatch-black-contrast-ratio');
+
+      const errorMessageElement = document.querySelector('#error-message');
+
+      window.onmessage = async (event) => {
+        const data = event.data.pluginMessage;
+        console.log(data);
+        textNodeData = data.textNodeData;
+        containerNodeData = data.containerNodeData;
+
+        if (data.type === 'SELECTION_CHANGE_TEXT_NODE') {
+          // Show the contrast interface
+          editorContentElement.classList.remove('hidden');
+          errorMessageElement.classList.add('hidden');
+
+          // Set the background color
+          backgroundSwatchVisualElement.style.backgroundColor = containerNodeData.fillColor.hex;
+          backgroundMainValueElement.textContent = containerNodeData.fillColor.hex;
+          backgroundSubValueElement.textContent = containerNodeData.fillColor.variableName;
+
+          // Set the text color
+          textSwatchVisualElement.style.backgroundColor = textNodeData.fillColor.hex;
+          textMainValueElement.textContent = textNodeData.fillColor.hex;
+          textSubValueElement.textContent = textNodeData.fillColor.variableName;
+
+          // Update the UI with contrast values
+          newColorSwatchWhiteContrastRatioElement.textContent = 
+            `${containerNodeData.colorContrast.white.toFixed(2)}:1`;
+          newColorSwatchBlackContrastRatioElement.textContent = 
+            `${containerNodeData.colorContrast.black.toFixed(2)}:1`;
+
+          if (containerNodeData.colorContrast.white > containerNodeData.colorContrast.black) {
+            newColorSwatchWhiteContrastRatioElement.classList.add('largest');
+            newColorSwatchBlackContrastRatioElement.classList.remove('largest');
+          } else {
+            newColorSwatchBlackContrastRatioElement.classList.add('largest');
+            newColorSwatchWhiteContrastRatioElement.classList.remove('largest');
+          }
+        }
+        if (data.type === 'SELECTION_CHANGE_NO_NODE_SELECTED' || data.type === 'SELECTION_CHANGE_OTHER_NODE') {
+          editorContentElement.classList.add('hidden');
+          errorMessageElement.classList.remove('hidden');
+          errorMessageElement.textContent = 'Select a text layer to get started.';
+        }
+      };
+
+      document.getElementById('apply-color-contrast').addEventListener('click', () => {
+        if (!containerNodeData || !textNodeData) {
+          console.error('No container node or text node data available');
+          return;
+        }
+
+        parent.postMessage({ pluginMessage: {
+          type: 'ENABLE_COLOR_CONTRAST_ON_SELECTED_NODE',
+          textNodeData: textNodeData,
+          containerNodeData: containerNodeData
+        }}, '*');
+      });
+
+      document.getElementById('help-button').addEventListener('click', () => {
+        parent.postMessage({ pluginMessage: {
+          type: 'NAVIGATE',
+          route: 'menu'
+        }}, '*');
+      });
+    </script>
+  </body>
+</html>

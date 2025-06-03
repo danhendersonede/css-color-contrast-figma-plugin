@@ -1,5 +1,5 @@
 import { ContainerNode, ContainerNodeData, TextNodeData } from "../types/nodes";
-import { getBestContrastColor } from "./color";
+import { getBestContrastColor, RGBToHex } from "./color";
 
 export function updateTextNodeColors(containerNode: ContainerNode, containerNodeData: ContainerNodeData): TextNodeData[] {
     const bestContrastColor = getBestContrastColor(containerNodeData.colorContrast);
@@ -29,8 +29,14 @@ export function updateTextNodeColors(containerNode: ContainerNode, containerNode
       textNodeData.push({
         id: textNode.id,
         type: textNode.type,
+        fillColor: {
+          hex: RGBToHex(bestContrastColor),
+          rgb: bestContrastColor,
+          variableName: null
+        },
         pluginData: {
-          enabled: "true"
+          enabled: true,
+          containerNodeData: containerNodeData
         }
       });
     });

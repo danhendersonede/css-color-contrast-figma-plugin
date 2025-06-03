@@ -6,9 +6,8 @@ export type BaseNodeData = {
 export type TextNodeData = {
   id: string;
   type: string;
-  pluginData: {
-    enabled: string;
-  };
+  fillColor: FillColorData;
+  pluginData: PluginData;
 }
 
 export type ContainerNodeData = {
@@ -21,11 +20,17 @@ export type ContainerNodeData = {
 export type FillColorData = {
   hex: string | null;
   rgb: RGB | null;
+  variableName: string | null;
 }
 
 export type ColorContrastData = {
   white: number | null;
   black: number | null;
+}
+
+export type PluginData = {
+  enabled: boolean;
+  containerNodeData: ContainerNodeData | null;
 }
 
 export type ContainerNode = (FrameNode | ComponentNode | InstanceNode)

@@ -2,7 +2,7 @@ import { BaseNodeData, ContainerNodeData, TextNodeData } from "./nodes";
 
 // Message types that can be sent from UI to plugin
 export type UIToPluginMessage = 
-  | { type: 'START_PLUGIN' }
+  | { type: 'NAVIGATE'; route: string; fromRoute?: string }
   | { 
       type: 'ENABLE_COLOR_CONTRAST_ON_SELECTED_NODE';
       textNodeData: TextNodeData;

@@ -11,7 +11,11 @@
   ],
   "ui": {
     "welcome": "dist/ui/welcome.html",
-    "selectNode": "dist/ui/selectNode.html"
+    "editor": "dist/ui/editor.html",
+    "intro1": "dist/ui/intro1.html",
+    "intro2": "dist/ui/intro2.html",
+    "intro3": "dist/ui/intro3.html",
+    "intro4": "dist/ui/intro4.html"
   },
   "networkAccess": {
     "allowedDomains": [

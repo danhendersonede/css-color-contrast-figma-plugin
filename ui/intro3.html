@@ -7,18 +7,23 @@
   </head>
   <body>
     <main>
-      <h1 class="center">color-contrast()</h1>
+      <hgroup>
+        <p>Intro: 3 of 4</p>
+        <h1>One less token</h1>
+      </hgroup>
 
-      <p>The first Figma plugin for CSS's <code>color-contrast()</code>. Explore how it could shape the future of design.</p>
+      <p>With <code>color-contrast()</code>, text color can be chosen automatically using the background-color.</p>
 
-      <button id="start">Get Started</button> 
+      <p>No need to define separate design tokens for light and dark text.</p>
+
+      <button id="start">Continue</button> 
     </main>
     <script>      
       document.getElementById('start').onclick = () => {
         parent.postMessage({ pluginMessage: { 
           type: 'NAVIGATE',
-          route: 'intro1',
-          fromRoute: 'welcome'
+          route: 'intro4',
+          fromRoute: 'intro3'
         } }, '*')
       }  
     </script>

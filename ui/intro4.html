@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>color-contrast()</title>
+  </head>
+  <body>
+    <main>
+      <hgroup>
+        <p>Intro: 4 of 4</p>
+        <h1>When is it available?</h1>
+      </hgroup>
+
+      <p>It is currently only supported in Safari Technology Preview.</p>
+
+      <p>This plugin lets you explore it early and consider how it might shape future design decisions.</p>
+
+      <p>It should not <strong>yet</strong> be used in production.</p>
+
+      <button id="start">Continue</button> 
+    </main>
+    <script>      
+      document.getElementById('start').onclick = () => {
+        parent.postMessage({ pluginMessage: { 
+          type: 'NAVIGATE',
+          route: 'editor',
+          fromRoute: 'intro4'
+        } }, '*')
+      }  
+    </script>
+  </body>
+</html>

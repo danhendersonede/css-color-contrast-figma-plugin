@@ -1,23 +1,18 @@
 
-import { ContainerNodeData, isContainerNode, TextNodeData } from "../../types/nodes";
-import { getContainerNodeData } from "../../utils/getContainerNodeData";
+import { ContainerNodeData, isContainerNode } from "../../types/nodes";
+import { getContainerNodeData, getTextNodeData } from "../../utils/getNodeData";
 import { PluginToUIMessage } from "../../types/messages";
 
 export async function handleTextNodeSelection(node: TextNode) {
-  const selectedTextNodeData: TextNodeData = {
-    id: node.id,
-    type: node.type,
-    pluginData: {
-      enabled: node.getSharedPluginData('color_contrast', 'enabled')
-    }
-  };
+  const selectedTextNodeData = await getTextNodeData(node);
 
   let selectedContainerNodeData: ContainerNodeData = {
     id: "",
     type: "",
     fillColor: {
       hex: null,
-      rgb: null
+      rgb: null,
+      variableName: null
     },
     colorContrast: {
       white: null,
@@ -26,7 +21,7 @@ export async function handleTextNodeSelection(node: TextNode) {
   };
 
   if (isContainerNode(node.parent)) {
-    selectedContainerNodeData = getContainerNodeData(node.parent);
+    selectedContainerNodeData = await getContainerNodeData(node.parent);
   }
 
   const message: PluginToUIMessage = {
