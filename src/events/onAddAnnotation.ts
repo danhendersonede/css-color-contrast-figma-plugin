@@ -15,9 +15,13 @@ export async function onAddAnnotation(textNodeData: TextNodeData, containerNodeD
 
   // Create a markdown annotation with detailed information
   const annotationMarkdown = `# The text color is controlled by color-contrast()
-    Use the following CSS function to automatically determine the text color based on the background color:
+    Use the following CSS property to automatically determine the text color based on the background color:
     
-    \`color: color-contrast(${containerNodeData.fillColor.variableName ? containerNodeData.fillColor.variableName : containerNodeData.fillColor.hex})\`
+\`\`\`css
+color: color-contrast(
+    ${containerNodeData.fillColor.variableName ? containerNodeData.fillColor.variableName : containerNodeData.fillColor.hex}
+)
+\`\`\`
   `;
 
   // Add the annotation to the node
