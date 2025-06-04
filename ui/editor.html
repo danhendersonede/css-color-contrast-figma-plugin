@@ -28,28 +28,43 @@
 
         <div id="text-color" class="group">
           <h2>Text Color</h2>
-          <h3>Current color</h3>
-          <div id="current-color" class="swatch">
-            <div class="swatch-visual small"></div>
-            <div class="swatch-details">
-              <span class="main-value"></span>
-              <span class="sub-value"></span>
+          <div id="current-color">
+            <h3>Current color</h3>
+            <div class="swatch">
+              <div class="swatch-visual small"></div>
+              <div class="swatch-details">
+                <span class="main-value"></span>
+                <span class="sub-value"></span>
+              </div>
             </div>
           </div>
 
-          <h3>New color with color-contrast()</h3>
-          <div id="new-color-swatch">
-            <div id="new-color-swatch-visual-white" class="swatch-visual">#FFFFFF</div>
-            <div id="new-color-swatch-details">
-              <span id="new-color-swatch-white-contrast-ratio" class="new-color-swatch-value">-</span>
-              <span>vs</span>
-              <span id="new-color-swatch-black-contrast-ratio" class="new-color-swatch-value">-</span>
+          <div id="enabled-swatch" class="hidden">
+            <div class="swatch">
+              <div class="swatch-details">
+                <span class="main-value">color-contrast()</span>
+                <span class="sub-value">Automatically adjusting</span>
+              </div>
             </div>
-            <div id="new-color-swatch-visual-black" class="swatch-visual">#000000</div>
           </div>
+          
+          <div id="automatic-swatch">
+            <h3>New color with color-contrast()</h3>
+            <div>
+              <div id="automatic-swatch-visual-white" class="swatch-visual">#FFFFFF</div>
+              <div id="automatic-swatch-details">
+                <span id="automatic-swatch-white-contrast-ratio" class="new-color-swatch-value">-</span>
+                <span>vs</span>
+                <span id="automatic-swatch-black-contrast-ratio" class="new-color-swatch-value">-</span>
+              </div>
+              <div id="automatic-swatch-visual-black" class="swatch-visual">#000000</div>
+            </div>
+          </div>
+
         </div>
 
-        <button id="apply-color-contrast">Switch to color-contrast()</button>
+        <button id="apply-color-contrast" class="hidden">Switch to color-contrast()</button>
+        <button id="disable-color-contrast" class="hidden">Disable color-contrast()</button>
     </div>
     </main>
     <script>
@@ -70,14 +85,18 @@
       const textMainValueElement = textColorGroup.querySelector('.main-value');
       const textSubValueElement = textColorGroup.querySelector('.sub-value');
 
-      const newColorSwatchElement = document.querySelector('#new-color-swatch');
-      const newColorSwatchVisualWhiteElement = newColorSwatchElement.querySelector('#new-color-swatch-visual-white');
-      const newColorSwatchVisualBlackElement = newColorSwatchElement.querySelector('#new-color-swatch-visual-black');
-      const newColorSwatchDetailsElement = newColorSwatchElement.querySelector('#new-color-swatch-details');
-      const newColorSwatchWhiteContrastRatioElement = newColorSwatchElement.querySelector('#new-color-swatch-white-contrast-ratio');
-      const newColorSwatchBlackContrastRatioElement = newColorSwatchElement.querySelector('#new-color-swatch-black-contrast-ratio');
+      const automaticSwatchElement = document.querySelector('#automatic-swatch');
+      const automaticSwatchVisualWhiteElement = automaticSwatchElement.querySelector('#automatic-swatch-visual-white');
+      const automaticSwatchVisualBlackElement = automaticSwatchElement.querySelector('#automatic-swatch-visual-black');
+      const automaticSwatchDetailsElement = automaticSwatchElement.querySelector('#automatic-swatch-details');
+      const automaticSwatchWhiteContrastRatioElement = automaticSwatchElement.querySelector('#automatic-swatch-white-contrast-ratio');
+      const automaticSwatchBlackContrastRatioElement = automaticSwatchElement.querySelector('#automatic-swatch-black-contrast-ratio');
 
       const errorMessageElement = document.querySelector('#error-message');
+      const enabledSwatchElement = document.querySelector('#enabled-swatch');
+      const applyColorContrastButton = document.querySelector('#apply-color-contrast');
+      const currentColorElement = document.querySelector('#current-color');
+      const disableColorContrastButton = document.querySelector('#disable-color-contrast');
 
       window.onmessage = async (event) => {
         const data = event.data.pluginMessage;
@@ -100,18 +119,29 @@
           textMainValueElement.textContent = textNodeData.fillColor.hex;
           textSubValueElement.textContent = textNodeData.fillColor.variableName;
 
-          // Update the UI with contrast values
-          newColorSwatchWhiteContrastRatioElement.textContent = 
-            `${containerNodeData.colorContrast.white.toFixed(2)}:1`;
-          newColorSwatchBlackContrastRatioElement.textContent = 
-            `${containerNodeData.colorContrast.black.toFixed(2)}:1`;
+          // Check if color-contrast is enabled
+          const isEnabled = textNodeData.pluginData?.enabled === true;
+          
+          // Show/hide appropriate sections based on enabled state
+          enabledSwatchElement.classList.toggle('hidden', !isEnabled);
+          currentColorElement.classList.toggle('hidden', isEnabled);
+          automaticSwatchElement.querySelector('h3').classList.toggle('hidden', isEnabled);
+          applyColorContrastButton.classList.toggle('hidden', isEnabled);
+          disableColorContrastButton.classList.toggle('hidden', !isEnabled);
+
+          // Update contrast values
+          const whiteContrast = containerNodeData.colorContrast.white.toFixed(2);
+          const blackContrast = containerNodeData.colorContrast.black.toFixed(2);
+          
+          automaticSwatchWhiteContrastRatioElement.textContent = `${whiteContrast}:1`;
+          automaticSwatchBlackContrastRatioElement.textContent = `${blackContrast}:1`;
 
           if (containerNodeData.colorContrast.white > containerNodeData.colorContrast.black) {
-            newColorSwatchWhiteContrastRatioElement.classList.add('largest');
-            newColorSwatchBlackContrastRatioElement.classList.remove('largest');
+            automaticSwatchWhiteContrastRatioElement.classList.add('largest');
+            automaticSwatchBlackContrastRatioElement.classList.remove('largest');
           } else {
-            newColorSwatchBlackContrastRatioElement.classList.add('largest');
-            newColorSwatchWhiteContrastRatioElement.classList.remove('largest');
+            automaticSwatchBlackContrastRatioElement.classList.add('largest');
+            automaticSwatchWhiteContrastRatioElement.classList.remove('largest');
           }
         }
         if (data.type === 'SELECTION_CHANGE_NO_NODE_SELECTED') {
@@ -129,6 +159,19 @@
 
         parent.postMessage({ pluginMessage: {
           type: 'ENABLE_COLOR_CONTRAST_ON_SELECTED_NODE',
+          textNodeData: textNodeData,
+          containerNodeData: containerNodeData
+        }}, '*');
+      });
+
+      document.getElementById('disable-color-contrast').addEventListener('click', () => {
+        if (!containerNodeData || !textNodeData) {
+          console.error('No container node or text node data available');
+          return;
+        }
+
+        parent.postMessage({ pluginMessage: {
+          type: 'DISABLE_COLOR_CONTRAST_ON_SELECTED_NODE',
           textNodeData: textNodeData,
           containerNodeData: containerNodeData
         }}, '*');

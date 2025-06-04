@@ -7,6 +7,11 @@ export type UIToPluginMessage =
       type: 'ENABLE_COLOR_CONTRAST_ON_SELECTED_NODE';
       textNodeData: TextNodeData;
       containerNodeData: ContainerNodeData;
+    }
+  | {
+      type: 'DISABLE_COLOR_CONTRAST_ON_SELECTED_NODE';
+      textNodeData: TextNodeData;
+      containerNodeData: ContainerNodeData;
     };
 
 // Message types that can be sent from plugin to UI

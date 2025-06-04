@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: "Readex Pro", "Inter", sans-serif;
 
+  /* Design tokens */
   --cc-border-radius-md: 8px;
   --cc-border-radius-sm: 4px;
   --cc-spacing-md: 1rem;
@@ -17,17 +18,22 @@ body {
   --cc-font-size-xs: 0.875rem;
 
   --cc-button-border-radius: var(--cc-border-radius-md);
+  --cc-swatch-size: 56px;
+  --cc-swatch-size-small: 32px;
 }
 
+/* Theme variations */
 .figma-light {
   --figma-color-text-secondary: #666666;
   --figma-color-bg-brand: #000000;
 }
 
+/* Reset and base styles */
 * {
   box-sizing: border-box;
 }
 
+/* Layout */
 main, #editor-content {
   display: flex;
   flex-direction: column;
@@ -45,10 +51,18 @@ main > div {
   width: 100%;
 }
 
-main > button:last-child, #editor-content > button:last-child {
+main > button, #editor-content > button {
   margin-top: auto;
 }
 
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Typography */
 h1 {
   margin: 0;
   font-weight: bold;
@@ -66,10 +80,10 @@ h3 {
   font-weight: 600;
   width: 100%;
   border-bottom: 1px dashed var(--figma-color-border-strong);
-  margin: 0;
+  margin: 0 0 var(--cc-spacing-xs) 0;
 }
 
-ul {
+p {
   margin: 0;
 }
 
@@ -79,10 +93,12 @@ hgroup p {
   color: var(--figma-color-text-secondary);
 }
 
-p {
+/* Lists */
+ul {
   margin: 0;
 }
 
+/* Buttons */
 button {
   align-items: center;
   appearance: none;
@@ -104,20 +120,11 @@ button:hover {
   background-color: var(--figma-color-bg-brand-hover);
 } 
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 #help-button {
   min-height: 38px;
 }
 
-.center {
-  text-align: center;
-}
-
+/* Groups and sections */
 .group {
   display: flex;
   flex-direction: column;
@@ -131,30 +138,15 @@ nav {
   border-radius: var(--cc-border-radius-md) var(--cc-border-radius-md) 0 0;
 }
 
-#contrast-details {
-  display: flex;
-  gap: 1rem;
-}
-
-#error-message {
-  flex-grow: 1;
-  align-content: center;
-  text-align: center;
-  font-size: var(--cc-font-size-md);
-}
-
-.hidden {
-  display: none !important;
-}
-
+/* Swatches */
 .swatch {
   display: flex;
   gap: var(--cc-spacing-sm);
 }
 
 .swatch-visual {
-  height: 56px;
-  width: 56px;
+  height: var(--cc-swatch-size);
+  width: var(--cc-swatch-size);
   flex-shrink: 0;
   border-radius: var(--cc-border-radius-sm);
   border: 2px solid #000000;
@@ -166,8 +158,13 @@ nav {
 }
 
 .swatch-visual.small {
-  height: 32px;
-  width: 32px;
+  height: var(--cc-swatch-size-small);
+  width: var(--cc-swatch-size-small);
+}
+
+.swatch-details {
+  display: flex;
+  flex-direction: column;
 }
 
 .swatch .main-value {
@@ -188,8 +185,8 @@ nav {
   width: 250px;
 }
 
-
-#new-color-swatch {
+/* New color swatch */
+#automatic-swatch > div {
   display: flex;
   gap: var(--cc-spacing-sm);
   align-items: center;
@@ -197,34 +194,29 @@ nav {
   width: 100%;
 }
 
-#new-color-swatch-visual-white {
+#automatic-swatch-visual-white {
   background-color: #FFFFFF;
   border: 2px solid var(--figma-color-border-strong);
 }
 
-#new-color-swatch-visual-black {
+#automatic-swatch-visual-black {
   background-color: #000000;
   border: 2px solid var(--figma-color-border-strong);
   color: #FFFFFF;
 }
 
-.contrast-ratio {
-  display: flex;
-  gap: 0.5rem;
-}
-
-#new-color-swatch-details {
+#automatic-swatch-details {
   font-size: var(--cc-font-size-sm);
   font-weight: 600;
   color: var(--figma-color-text-secondary);
 }
 
-#new-color-swatch-details .new-color-swatch-value {
+#automatic-swatch-details .new-color-swatch-value {
   font-size: var(--cc-font-size-md);
   color: var(--figma-color-text);
 }
 
-#new-color-swatch-details .new-color-swatch-value.largest {
+#automatic-swatch-details .new-color-swatch-value.largest {
   background-color: var(--figma-color-bg-success-secondary);
   color: var(--figma-color-text-onsuccess);
   font-weight: bold;
@@ -233,12 +225,29 @@ nav {
   border-radius: var(--cc-border-radius-sm);
 }
 
-.swatch-details {
-  display: flex;
-  flex-direction: column;
+/* Enabled swatch */
+
+#disable-color-contrast {
+  background-color: var(--figma-color-bg-danger);
 }
 
-.swatch-details #hex {
-  font-size: 2rem;
-  font-weight: 600;
+#disable-color-contrast:hover {
+  background-color: var(--figma-color-bg-danger-hover);
+}
+
+/* Utility classes */
+.hidden {
+  display: none !important;
+}
+
+.center {
+  text-align: center;
+}
+
+/* Error message */
+#error-message {
+  flex-grow: 1;
+  align-content: center;
+  text-align: center;
+  font-size: var(--cc-font-size-md);
 }
