@@ -51,6 +51,18 @@ export function isContainerNode(node: BaseNode | null): node is ContainerNode {
   );
 }
 
+export type NodeState = {
+  type: 'NO_SELECTION' | 'TEXT_NODE' | 'CONTAINER_NODE' | 'UNSUPPORTED_NODE';
+  textNodeData: TextNodeData | null;
+  containerNodeData: ContainerNodeData | null;
+};
+
+export type NodeStateChangeEvent = {
+  type: NodeState['type'];
+  data: NodeState;
+};
+
 export function isTextNode(node: BaseNode | null): node is TextNode {
-  return node !== null && node.type === 'TEXT';
+  if (!node) return false;
+  return node.type === 'TEXT';
 }

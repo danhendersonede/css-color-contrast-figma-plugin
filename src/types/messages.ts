@@ -19,7 +19,7 @@ export type PluginToUIMessage =
   | {
       type: 'SELECTION_CHANGE_TEXT_NODE';
       textNodeData: TextNodeData;
-      containerNodeData: ContainerNodeData;
+      containerNodeData: ContainerNodeData | null;
     }
   | {
       type: 'SELECTION_CHANGE_CONTAINER_NODE';
@@ -28,6 +28,7 @@ export type PluginToUIMessage =
     }
   | {
       type: 'SELECTION_CHANGE_NO_NODE_SELECTED';
+      message?: string;
     }
   | {
       type: 'UPDATE_COMPLETE';

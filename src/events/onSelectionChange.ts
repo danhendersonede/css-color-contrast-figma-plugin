@@ -1,23 +1,10 @@
-import { handleContainerNodeSelection } from "./selectionChangeHandlers/handleContainerNodeSelection";
-import { handleTextNodeSelection } from "./selectionChangeHandlers/handleTextNodeSelection";
-import { handleNoNodeSelected } from "./selectionChangeHandlers/handleNoNodeSelected";
-import { isContainerNode, isTextNode } from "../types/nodes";
+import { NodeStateManager } from "../state/nodeStateManager";
+import { MessageHandler } from "../messaging/messageHandler";
 
-export function onSelectionChange(): void {
-    const node = figma.currentPage.selection[0] as SceneNode;
-
-    if (!node) {
-        handleNoNodeSelected();
-        return;
-    }
-
-    if (isTextNode(node)) {
-        handleTextNodeSelection(node);
-        return;
-    } 
+export async function onSelectionChange(): Promise<void> {
+    const stateManager = NodeStateManager.getInstance();
+    const messageHandler = MessageHandler.getInstance();
     
-    if (isContainerNode(node)) {
-        handleContainerNodeSelection(node);
-        return;
-    } 
+    const stateEvent = await stateManager.handleSelectionChange();
+    messageHandler.handleStateChange(stateEvent);
 }
