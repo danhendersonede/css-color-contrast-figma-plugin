@@ -36,8 +36,18 @@ export class NodeStateManager {
     // Handle text node selection
     if (isTextNode(node)) {
       const textNodeData = await getTextNodeData(node);
-      let containerNodeData = null;
       
+      // Check if parent is a container node
+      if (!node.parent || !isContainerNode(node.parent)) {
+        this.currentState = {
+          type: 'TEXT_NODE_NO_CONTAINER',
+          textNodeData,
+          containerNodeData: null
+        };
+        return { type: 'TEXT_NODE_NO_CONTAINER', data: this.currentState };
+      }
+
+      let containerNodeData = null;
       if (node.parent && isContainerNode(node.parent)) {
         containerNodeData = await getContainerNodeData(node.parent);
       }

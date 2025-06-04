@@ -32,6 +32,13 @@ export class MessageHandler {
         }
         break;
 
+      case 'TEXT_NODE_NO_CONTAINER':
+        this.postMessage({
+          type: 'SELECTION_CHANGE_NO_NODE_SELECTED',
+          message: 'The selected text layer must be inside a frame, component, instance, group, or section.'
+        });
+        break;
+
       case 'CONTAINER_NODE':
         if (stateEvent.data.containerNodeData) {
           this.postMessage({

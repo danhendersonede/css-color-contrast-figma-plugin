@@ -52,7 +52,7 @@ export function isContainerNode(node: BaseNode | null): node is ContainerNode {
 }
 
 export type NodeState = {
-  type: 'NO_SELECTION' | 'TEXT_NODE' | 'CONTAINER_NODE' | 'UNSUPPORTED_NODE';
+  type: 'NO_SELECTION' | 'TEXT_NODE' | 'CONTAINER_NODE' | 'UNSUPPORTED_NODE' | 'TEXT_NODE_NO_CONTAINER';
   textNodeData: TextNodeData | null;
   containerNodeData: ContainerNodeData | null;
 };
