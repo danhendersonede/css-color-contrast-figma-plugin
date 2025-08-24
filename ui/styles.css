@@ -1,6 +1,6 @@
 body {
-  background: var(--figma-color-bg);
-  color: var(--figma-color-text);
+  background: var(--color-secondary);
+  color: var(--color-primary);
   margin: 0;
   font-family: "Inclusive Sans", "Inter", sans-serif;
   
@@ -38,11 +38,6 @@ body {
   --swatch-size-small: 2rem;          /* 32px */
 }
 
-/* Theme variations */
-.figma-light {
-  --figma-color-text-secondary: #666666;
-  --figma-color-bg-brand: #000000;
-}
 
 /* Reset and base styles */
 * {
@@ -95,7 +90,6 @@ h3 {
   font-size: var(--paragraph-md-bold-size);
   font-weight: 600;
   width: 100%;
-  border-bottom: 1px dashed var(--figma-color-border-strong);
   margin: 0 0 var(--spacing-sm) 0;
 }
 
@@ -106,7 +100,7 @@ p {
 hgroup p {
   font-weight: 600;
   font-size: var(--paragraph-lg-size);
-  color: var(--figma-color-text-secondary);
+  color: var(--color-tertiary);
 }
 
 /* Lists */
@@ -118,13 +112,13 @@ ul {
 button {
   align-items: center;
   appearance: none;
-  background-color: var(--figma-color-bg-brand);
+  background-color: var(--color-primary);
   border: none;
   border-radius: var(--button-border-radius);
-  color: var(--figma-color-text-onbrand);
+  color: var(--color-secondary);
   cursor: pointer;
   display: flex;
-  fill: var(--figma-color-icon-onbrand);
+  fill: var(--color-secondary);
   min-height: 44px;
   justify-content: center;
   padding: 0 var(--spacing-md);
@@ -132,9 +126,7 @@ button {
   font-size: var(--paragraph-lg-size);
 }
 
-button:hover {
-  background-color: var(--figma-color-bg-brand-hover);
-} 
+ 
 
 #help-button {
   min-height: 38px;
@@ -148,8 +140,8 @@ button:hover {
 }
 
 .group > h2 {
-  background-color: var(--figma-color-bg-brand);
-  color: var(--figma-color-text-onbrand);
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
 }
@@ -190,7 +182,7 @@ button:hover {
 
 .swatch .sub-value {
   font-size: 1rem;
-  color: var(--figma-color-text-secondary);
+  color: var(--color-tertiary);
   overflow-x: hidden;
   text-wrap-mode: nowrap;
   text-overflow: ellipsis;
@@ -212,29 +204,25 @@ button:hover {
 
 #automatic-swatch-visual-white {
   background-color: #FFFFFF;
-  border: 2px solid var(--figma-color-border-strong);
 }
 
 #automatic-swatch-visual-black {
   background-color: #000000;
-  border: 2px solid var(--figma-color-border-strong);
   color: #FFFFFF;
 }
 
 #automatic-swatch-details {
   font-size: var(--paragraph-md-bold-size);
   font-weight: 600;
-  color: var(--figma-color-text-secondary);
+  color: var(--color-tertiary);
 }
 
 #automatic-swatch-details .new-color-swatch-value {
   font-size: var(--paragraph-lg-size);
-  color: var(--figma-color-text);
+  color: var(--color-primary);
 }
 
 #automatic-swatch-details .new-color-swatch-value.largest {
-  background-color: var(--figma-color-bg-success-secondary);
-  color: var(--figma-color-text-onsuccess);
   font-weight: bold;
   font-size: var(--paragraph-lg-size);
   padding: var(--spacing-sm) var(--spacing-md);
@@ -244,11 +232,7 @@ button:hover {
 /* Enabled swatch */
 
 #disable-color-contrast {
-  background-color: var(--figma-color-bg-danger);
-}
-
-#disable-color-contrast:hover {
-  background-color: var(--figma-color-bg-danger-hover);
+  background-color: var(--color-primary);
 }
 
 /* Utility classes */
