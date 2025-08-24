@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>color-contrast()</title>
+    <style>
+      .help-menu-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        padding: 2rem 1.5rem;
+        max-width: 420px;
+        margin: 2rem auto;
+      }
+
+      .help-menu-card h1 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .help-menu-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .help-menu-nav a,
+      .help-menu-nav span {
+        font-weight: bold;
+        font-size: 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        margin-bottom: 0.5rem;
+      }
+
+      .help-menu-nav a:first-child {
+        font-size: 1.7rem;
+      }
+
+      .help-menu-nav hr {
+        margin: 0 0 0.5rem 0;
+        border: none;
+        border-top: 1px solid rgba(0,0,0,0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="help-menu-card">
+        <h1>Help</h1>
+        <nav class="help-menu-nav">
+          <a href="editor.html">Back to editor</a>
+          <hr>
+          <a href="intro1.html">Tutorial</a>
+          <hr>
+          <span>Current support</span>
+          <hr>
+          <span>Ask a question</span>
+          <hr>
+          <span>Share</span>
+          <hr>
+          <a href="https://mantisandco.com" target="_blank" rel="noopener">Mantis & Co.</a>
+        </nav>
+      </div>
+    </main>
+  </body>
+</html>
