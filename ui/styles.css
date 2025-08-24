@@ -4,8 +4,10 @@
 :root {
   /* Color System */
   --color-primary: #000000;
+  --color-primary-inverted: #ffffff;
   --color-secondary: #ffffff;
-  --color-tertiary: #5a5a5a;
+  --color-secondary-inverted: #000000;
+  --color-tertiary: #5a5a5a;  
   
   /* Typography Scale */
   --heading-lg-size: 2.375rem;        /* 38px */
@@ -32,6 +34,9 @@
   --button-border-radius: var(--border-radius-md);
   --swatch-size: 3.5rem;              /* 56px */
   --swatch-size-small: 2rem;          /* 32px */
+  
+  /* Logo component sizing */
+  --logo-size: 7.5rem;                /* 120px */
 }
 
 /* ============================================
@@ -55,6 +60,9 @@ h1 {
   margin: 0;
   font-weight: bold;
   font-size: var(--heading-lg-size);
+  font-weight: var(--heading-lg-weight);
+  font-family: var(--heading-lg-family);
+  margin-bottom: calc(var(--spacing-xl) * 2);
   line-height: 1;
 }
 
@@ -114,6 +122,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 /* ============================================
@@ -139,6 +148,43 @@ button {
 
 #help-button {
   min-height: 38px;
+}
+
+/* Secondary button style - transparent with border */
+button.secondary,
+a.link-button.secondary {
+  background-color: transparent;
+  color: currentColor;
+  font-size: var(--paragraph-md-bold-size);
+  font-weight: var(--paragraph-md-bold-weight);
+  border: 1px solid currentColor;
+  padding: var(--spacing-md) calc(var(--spacing-md) * 2);
+  min-height: 36px;
+}
+
+button.secondary:hover,
+a.link-button.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Link button styling */
+a.link-button {
+  align-items: center;
+  appearance: none;
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: var(--button-border-radius);
+  color: var(--color-secondary);
+  cursor: pointer;
+  display: flex;
+  fill: var(--color-secondary);
+  min-height: 44px;
+  justify-content: center;
+  padding: 0 var(--spacing-md);
+  font-weight: bold;
+  font-size: var(--paragraph-lg-size);
+  text-decoration: none;
+  font-family: "Inclusive Sans", "Inter", sans-serif;
 }
 
 /* Groups and Sections */
@@ -250,6 +296,51 @@ button {
   align-content: center;
   text-align: center;
   font-size: var(--paragraph-lg-size);
+}
+
+/* ============================================
+   INVERTED THEME
+   ============================================ */
+
+/* Container with inverted color scheme */
+.inverted {
+  background: var(--color-secondary-inverted);
+  color: var(--color-primary-inverted);
+}
+
+/* ============================================
+   REUSABLE LAYOUT COMPONENTS
+   ============================================ */
+
+/* Container utilities */
+.container {
+  padding: var(--spacing-xl);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container.centered {
+  align-items: center;
+}
+
+/* Logo component - reusable across screens */
+.logo {
+  width: var(--logo-size);
+  height: auto;
+  margin: calc(var(--spacing-xl) * 2.5) 0 var(--spacing-xl);
+}
+
+/* Button group layouts */
+.button-group {
+  display: flex;
+  gap: var(--spacing-xl);
+  width: 100%;
+  max-width: 280px;
+}
+
+.button-group.vertical {
+  flex-direction: column;
 }
 
 /* ============================================

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu - color-contrast()</title>
+</head>
+<body>
+  <div class="inverted container centered">
+    <!-- Navigation bar with close button -->
+    <nav>
+      <div></div> <!-- Spacer for flexbox alignment -->
+      <button class="secondary" id="close-button">
+        Close
+      </button>
+    </nav>
+    
+    <!-- Logo component -->
+    <div class="logo">
+      <svg viewBox="0 0 337 217" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="106.5" cy="108.5" r="86.5" fill="black" stroke="white" stroke-width="8"/>
+        <circle cx="168.5" cy="108.5" r="86.5" fill="#5A5A5A" stroke="white" stroke-width="8"/>
+        <circle cx="230.5" cy="108.5" r="86.5" fill="white" stroke="white" stroke-width="8"/>
+      </svg>
+    </div>
+    
+    <h1>color-contrast()</h1>
+    
+    <!-- Button group -->
+    <div class="button-group vertical">
+      <button class="secondary" id="tutorial-button">
+        Tutorial
+      </button>
+      <a href="https://caniuse.com/mdn-css_types_color_contrast-color" target="_blank" rel="noopener noreferrer" class="link-button secondary">
+        Can I Use
+      </a>
+      <a href="https://github.com/danhendersonede/css-color-contrast-figma-plugin/issues" target="_blank" rel="noopener noreferrer" class="link-button secondary">
+        Feedback
+      </a>
+    </div>
+  </div>
+  
+  <script>
+    document.getElementById('close-button').onclick = () => {
+      parent.postMessage({ 
+        pluginMessage: { 
+          type: 'NAVIGATE',
+          route: 'editor',
+          fromRoute: 'menu'
+        }
+      }, '*');
+    };
+    
+    document.getElementById('tutorial-button').onclick = () => {
+      parent.postMessage({ 
+        pluginMessage: { 
+          type: 'NAVIGATE',
+          route: 'intro1',
+          fromRoute: 'menu'
+        }
+      }, '*');
+    };
+  </script>
+</body>
+</html>
