@@ -1,30 +1,26 @@
-body {
-  background: var(--color-secondary);
-  color: var(--color-primary);
-  margin: 0;
-  font-family: "Inclusive Sans", "Inter", sans-serif;
-  
-  /* Colors */
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+:root {
+  /* Color System */
   --color-primary: #000000;
   --color-secondary: #ffffff;
   --color-tertiary: #5a5a5a;
   
-  /* Typography - Heading */
+  /* Typography Scale */
   --heading-lg-size: 2.375rem;        /* 38px */
   --heading-lg-weight: 700;
   --heading-lg-family: "Inclusive Sans", sans-serif;
   
-  /* Typography - Paragraph Large */
   --paragraph-lg-size: 1.375rem;      /* 22px */
   --paragraph-lg-weight: 400;
   --paragraph-lg-family: "Inclusive Sans", sans-serif;
   
-  /* Typography - Paragraph Medium Bold */
   --paragraph-md-bold-size: 1.125rem; /* 18px */
   --paragraph-md-bold-weight: 600;
   --paragraph-md-bold-family: "Inclusive Sans", sans-serif;
   
-  /* Spacing */
+  /* Spacing System */
   --spacing-sm: 0.25rem;              /* 4px */
   --spacing-md: 0.5rem;               /* 8px */
   --spacing-xl: 1.5rem;               /* 24px */
@@ -32,48 +28,29 @@ body {
   /* Border Radius */
   --border-radius-md: 0.625rem;       /* 10px */
   
-  /* Component tokens */
+  /* Component-Specific Tokens */
   --button-border-radius: var(--border-radius-md);
   --swatch-size: 3.5rem;              /* 56px */
   --swatch-size-small: 2rem;          /* 32px */
 }
 
-
-/* Reset and base styles */
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
 * {
   box-sizing: border-box;
 }
 
-/* Layout */
-main, #editor-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xl);
-  height: 100vh;
+body {
+  background: var(--color-secondary);
+  color: var(--color-primary);
+  margin: 0;
+  font-family: "Inclusive Sans", "Inter", sans-serif;
 }
 
-main { 
-  padding: var(--spacing-xl);
-}
-
-main > div {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-}
-
-main > button, #editor-content > button {
-  margin-top: auto;
-}
-
-/* Navigation */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Typography */
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
 h1 {
   margin: 0;
   font-weight: bold;
@@ -103,11 +80,45 @@ hgroup p {
   color: var(--color-tertiary);
 }
 
-/* Lists */
 ul {
   margin: 0;
 }
 
+/* ============================================
+   LAYOUT COMPONENTS
+   ============================================ */
+/* Main Containers */
+main, #editor-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  height: 100vh;
+}
+
+main { 
+  padding: var(--spacing-xl);
+}
+
+main > div {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+main > button, #editor-content > button {
+  margin-top: auto;
+}
+
+/* Navigation Bar */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ============================================
+   UI COMPONENTS
+   ============================================ */
 /* Buttons */
 button {
   align-items: center;
@@ -126,13 +137,11 @@ button {
   font-size: var(--paragraph-lg-size);
 }
 
- 
-
 #help-button {
   min-height: 38px;
 }
 
-/* Groups and sections */
+/* Groups and Sections */
 .group {
   display: flex;
   flex-direction: column;
@@ -146,7 +155,7 @@ button {
   border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
 }
 
-/* Swatches */
+/* Color Swatches */
 .swatch {
   display: flex;
   gap: var(--spacing-md);
@@ -189,11 +198,14 @@ button {
   width: 234px;
 }
 
+/* ============================================
+   SCREEN-SPECIFIC STYLES
+   ============================================ */
+/* Editor Screen */
 #current-color .sub-value {
   width: 250px;
 }
 
-/* New color swatch */
 #automatic-swatch > div {
   display: flex;
   gap: var(--spacing-md);
@@ -229,25 +241,24 @@ button {
   border-radius: var(--border-radius-md);
 }
 
-/* Enabled swatch */
-
 #disable-color-contrast {
   background-color: var(--color-primary);
 }
 
-/* Utility classes */
+#error-message {
+  flex-grow: 1;
+  align-content: center;
+  text-align: center;
+  font-size: var(--paragraph-lg-size);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
 .hidden {
   display: none !important;
 }
 
 .center {
   text-align: center;
-}
-
-/* Error message */
-#error-message {
-  flex-grow: 1;
-  align-content: center;
-  text-align: center;
-  font-size: var(--paragraph-lg-size);
 }
