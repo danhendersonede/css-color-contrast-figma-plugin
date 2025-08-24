@@ -6,28 +6,43 @@
     <title>color-contrast()</title>
   </head>
   <body>
-    <main>
-      <hgroup>
-        <p>Intro: 4 of 4</p>
-        <h1>When is it available?</h1>
-      </hgroup>
-
-      <p>It is currently only supported in Safari Technology Preview.</p>
-
-      <p>This plugin lets you explore it early and consider how it might shape future design decisions.</p>
-
-      <p>It should not <strong>yet</strong> be used in production.</p>
-
-      <button id="start">Continue</button> 
+    <main class="container">
+      <div class="header inverted">
+        <nav>
+          <p>Intro: 4 of 4</p>
+          <button id="skip" class="btn btn-secondary">
+            Skip tutorial
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M5.5 6L7.5 8L5.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 6L11 8L9 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </nav>
+        <h1>It's experimental.</h1>
+      </div>
+      <div class="container inset gap">
+        <p>It is currently only supported in Safari Technology Preview.</p>
+        <p>This plugin emulates its functionality so you explore it early and consider how it might shape future design decisions.</p>
+        <p>It should not be used in production environments at this time.</p>
+        <button id="start-playing" class="btn btn-primary btn-full">Start playing</button>
+      </div>
     </main>
     <script>      
-      document.getElementById('start').onclick = () => {
+      document.getElementById('start-playing').onclick = () => {
         parent.postMessage({ pluginMessage: { 
           type: 'NAVIGATE',
           route: 'editor',
           fromRoute: 'intro4'
         } }, '*')
-      }  
+      }
+      document.getElementById('skip').onclick = () => {
+        parent.postMessage({ pluginMessage: { 
+          type: 'NAVIGATE',
+          route: 'editor',
+          fromRoute: 'intro4'
+        } }, '*')
+      }
     </script>
   </body>
 </html>
