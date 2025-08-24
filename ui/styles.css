@@ -113,6 +113,26 @@ nav {
   width: 100%;
 }
 
+/* Header */
+.header {
+  padding: var(--spacing-xxl) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+}
+
+.header.centered {
+  align-items: center;
+}
+
+.header p {
+  margin: 0;
+  font-size: var(--paragraph-lg-size);
+  font-weight: 400;
+  line-height: 1;
+}
+
 /* ============================================
    BUTTON SYSTEM
    ============================================ */
@@ -296,12 +316,6 @@ nav {
   background-color: var(--color-primary);
 }
 
-#error-message {
-  flex-grow: 1;
-  align-content: center;
-  text-align: center;
-  font-size: var(--paragraph-lg-size);
-}
 
 /* ============================================
    INVERTED THEME
@@ -344,7 +358,7 @@ nav {
 .logo {
   width: var(--logo-size);
   height: auto;
-  margin: calc(var(--spacing-xl) * 2.5) 0 var(--spacing-xl);
+  margin: var(--spacing-xl) 0 var(--spacing-sm) 0;
 }
 
 /* Button group layouts */
@@ -393,25 +407,6 @@ code {
   background: none;
   padding: 0;
   color: inherit;
-}
-
-/* ============================================
-   INTRO SCREENS
-   ============================================ */
-
-.header {
-  padding: var(--spacing-xxl) var(--spacing-xl);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: var(--spacing-md);
-}
-
-.header p {
-  margin: 0;
-  font-size: var(--paragraph-lg-size);
-  font-weight: 400;
-  line-height: 1;
 }
 
 /* ============================================
