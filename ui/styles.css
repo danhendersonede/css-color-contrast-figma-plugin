@@ -2,24 +2,40 @@ body {
   background: var(--figma-color-bg);
   color: var(--figma-color-text);
   margin: 0;
-  font-family: "Readex Pro", "Inter", sans-serif;
-
-  /* Design tokens */
-  --cc-border-radius-md: 8px;
-  --cc-border-radius-sm: 4px;
-  --cc-spacing-md: 1rem;
-  --cc-spacing-sm: 0.5rem;
-  --cc-spacing-xs: 0.25rem;
-
-  --cc-font-size-xl: 2.5rem;
-  --cc-font-size-lg: 1.25rem;
-  --cc-font-size-md: 1.125rem;
-  --cc-font-size-sm: 1rem;
-  --cc-font-size-xs: 0.875rem;
-
-  --cc-button-border-radius: var(--cc-border-radius-md);
-  --cc-swatch-size: 56px;
-  --cc-swatch-size-small: 32px;
+  font-family: "Inclusive Sans", "Inter", sans-serif;
+  
+  /* Colors */
+  --color-primary: #000000;
+  --color-secondary: #ffffff;
+  --color-tertiary: #5a5a5a;
+  
+  /* Typography - Heading */
+  --heading-lg-size: 2.375rem;        /* 38px */
+  --heading-lg-weight: 700;
+  --heading-lg-family: "Inclusive Sans", sans-serif;
+  
+  /* Typography - Paragraph Large */
+  --paragraph-lg-size: 1.375rem;      /* 22px */
+  --paragraph-lg-weight: 400;
+  --paragraph-lg-family: "Inclusive Sans", sans-serif;
+  
+  /* Typography - Paragraph Medium Bold */
+  --paragraph-md-bold-size: 1.125rem; /* 18px */
+  --paragraph-md-bold-weight: 600;
+  --paragraph-md-bold-family: "Inclusive Sans", sans-serif;
+  
+  /* Spacing */
+  --spacing-sm: 0.25rem;              /* 4px */
+  --spacing-md: 0.5rem;               /* 8px */
+  --spacing-xl: 1.5rem;               /* 24px */
+  
+  /* Border Radius */
+  --border-radius-md: 0.625rem;       /* 10px */
+  
+  /* Component tokens */
+  --button-border-radius: var(--border-radius-md);
+  --swatch-size: 3.5rem;              /* 56px */
+  --swatch-size-small: 2rem;          /* 32px */
 }
 
 /* Theme variations */
@@ -37,12 +53,12 @@ body {
 main, #editor-content {
   display: flex;
   flex-direction: column;
-  gap: var(--cc-spacing-md);
+  gap: var(--spacing-xl);
   height: 100vh;
 }
 
 main { 
-  padding: var(--cc-spacing-md);
+  padding: var(--spacing-xl);
 }
 
 main > div {
@@ -66,21 +82,21 @@ nav {
 h1 {
   margin: 0;
   font-weight: bold;
-  font-size: var(--cc-font-size-xl);
+  font-size: var(--heading-lg-size);
   line-height: 1;
 }
 
 h2 {
   margin: 0;
-  font-size: var(--cc-font-size-sm);
+  font-size: var(--paragraph-md-bold-size);
 }
 
 h3 {
-  font-size: var(--cc-font-size-xs);
+  font-size: var(--paragraph-md-bold-size);
   font-weight: 600;
   width: 100%;
   border-bottom: 1px dashed var(--figma-color-border-strong);
-  margin: 0 0 var(--cc-spacing-xs) 0;
+  margin: 0 0 var(--spacing-sm) 0;
 }
 
 p {
@@ -89,7 +105,7 @@ p {
 
 hgroup p {
   font-weight: 600;
-  font-size: var(--cc-font-size-md);
+  font-size: var(--paragraph-lg-size);
   color: var(--figma-color-text-secondary);
 }
 
@@ -104,16 +120,16 @@ button {
   appearance: none;
   background-color: var(--figma-color-bg-brand);
   border: none;
-  border-radius: var(--cc-button-border-radius);
+  border-radius: var(--button-border-radius);
   color: var(--figma-color-text-onbrand);
   cursor: pointer;
   display: flex;
   fill: var(--figma-color-icon-onbrand);
   min-height: 44px;
   justify-content: center;
-  padding: 0 var(--cc-spacing-sm);
+  padding: 0 var(--spacing-md);
   font-weight: bold;
-  font-size: var(--cc-font-size-lg);
+  font-size: var(--paragraph-lg-size);
 }
 
 button:hover {
@@ -128,27 +144,27 @@ button:hover {
 .group {
   display: flex;
   flex-direction: column;
-  gap: var(--cc-spacing-sm);
+  gap: var(--spacing-md);
 }
 
 .group > h2 {
   background-color: var(--figma-color-bg-brand);
   color: var(--figma-color-text-onbrand);
-  padding: var(--cc-spacing-xs) var(--cc-spacing-sm);
-  border-radius: var(--cc-border-radius-md) var(--cc-border-radius-md) 0 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
 }
 
 /* Swatches */
 .swatch {
   display: flex;
-  gap: var(--cc-spacing-sm);
+  gap: var(--spacing-md);
 }
 
 .swatch-visual {
-  height: var(--cc-swatch-size);
-  width: var(--cc-swatch-size);
+  height: var(--swatch-size);
+  width: var(--swatch-size);
   flex-shrink: 0;
-  border-radius: var(--cc-border-radius-sm);
+  border-radius: var(--border-radius-md);
   border: 2px solid #000000;
   font-size: 11px;
   text-align: center;
@@ -158,8 +174,8 @@ button:hover {
 }
 
 .swatch-visual.small {
-  height: var(--cc-swatch-size-small);
-  width: var(--cc-swatch-size-small);
+  height: var(--swatch-size-small);
+  width: var(--swatch-size-small);
 }
 
 .swatch-details {
@@ -188,7 +204,7 @@ button:hover {
 /* New color swatch */
 #automatic-swatch > div {
   display: flex;
-  gap: var(--cc-spacing-sm);
+  gap: var(--spacing-md);
   align-items: center;
   justify-content: space-between;
   width: 100%;
@@ -206,13 +222,13 @@ button:hover {
 }
 
 #automatic-swatch-details {
-  font-size: var(--cc-font-size-sm);
+  font-size: var(--paragraph-md-bold-size);
   font-weight: 600;
   color: var(--figma-color-text-secondary);
 }
 
 #automatic-swatch-details .new-color-swatch-value {
-  font-size: var(--cc-font-size-md);
+  font-size: var(--paragraph-lg-size);
   color: var(--figma-color-text);
 }
 
@@ -220,9 +236,9 @@ button:hover {
   background-color: var(--figma-color-bg-success-secondary);
   color: var(--figma-color-text-onsuccess);
   font-weight: bold;
-  font-size: var(--cc-font-size-lg);
-  padding: var(--cc-spacing-xs) var(--cc-spacing-sm);
-  border-radius: var(--cc-border-radius-sm);
+  font-size: var(--paragraph-lg-size);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
 }
 
 /* Enabled swatch */
@@ -249,5 +265,5 @@ button:hover {
   flex-grow: 1;
   align-content: center;
   text-align: center;
-  font-size: var(--cc-font-size-md);
+  font-size: var(--paragraph-lg-size);
 }
