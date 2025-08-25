@@ -6,14 +6,10 @@ import { disableColorContrastOnSelectedNode } from "./events/onDisableColorContr
 import { NodeStateManager } from "./state/nodeStateManager";
 import { MessageHandler } from "./messaging/messageHandler";
 
-// Initialize singletons
 const stateManager = NodeStateManager.getInstance();
 const messageHandler = MessageHandler.getInstance();
 
-// Show the most relevant UI on plugin load
 onPluginStart();
-
-// Direct messages from the plugin UI
 figma.ui.onmessage = async (msg: UIToPluginMessage) => {
   switch (msg.type) {
     case 'NAVIGATE':
@@ -22,7 +18,6 @@ figma.ui.onmessage = async (msg: UIToPluginMessage) => {
       
     case 'ENABLE_COLOR_CONTRAST_ON_SELECTED_NODE': {
       await applyColorContrastToSelectedNode(msg.textNodeData, msg.containerNodeData);
-      // Update state after enabling color contrast
       const stateEvent = await stateManager.handleSelectionChange();
       messageHandler.handleStateChange(stateEvent);
       break;
@@ -30,7 +25,6 @@ figma.ui.onmessage = async (msg: UIToPluginMessage) => {
 
     case 'DISABLE_COLOR_CONTRAST_ON_SELECTED_NODE': {
       await disableColorContrastOnSelectedNode(msg.textNodeData, msg.containerNodeData);
-      // Update state after disabling color contrast
       const stateEvent = await stateManager.handleSelectionChange();
       messageHandler.handleStateChange(stateEvent);
       break;
@@ -38,7 +32,6 @@ figma.ui.onmessage = async (msg: UIToPluginMessage) => {
   }
 };
 
-// Handle events from the editor
 figma.on('selectionchange', async () => {
   const stateEvent = await stateManager.handleSelectionChange();
   messageHandler.handleStateChange(stateEvent);

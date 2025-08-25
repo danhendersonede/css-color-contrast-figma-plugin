@@ -5,16 +5,25 @@ import { onUpdateEnabledNodes } from "./onUpdateEnabledNodes";
 export async function onPluginStart() {
     const introductionComplete = figma.root.getPluginData('color-contrast-introduction-complete');
 
-    // Show loading UI first
     showUI(__uiFiles__.loading);
 
-    onUpdateEnabledNodes();
+    try {
+        await onUpdateEnabledNodes();
+    } catch (error) {
+        console.error('Error updating enabled nodes:', error);
+        // Continue with plugin startup even if update fails
+    }
     
     if (introductionComplete) {
-        showUI(__uiFiles__.editor);
+        showUI(__uiFiles__['editor-empty']);
     } else {
         showUI(__uiFiles__.welcome);
     }
 
-    onSelectionChange();
+    try {
+        await onSelectionChange();
+    } catch (error) {
+        console.error('Error handling initial selection:', error);
+        // Continue with plugin startup
+    }
 }

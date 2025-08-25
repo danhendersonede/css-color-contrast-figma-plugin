@@ -32,14 +32,14 @@
       document.getElementById('start-playing').onclick = () => {
         parent.postMessage({ pluginMessage: { 
           type: 'NAVIGATE',
-          route: 'editor',
+          route: 'editor-empty',
           fromRoute: 'intro4'
         } }, '*')
       }
       document.getElementById('skip').onclick = () => {
         parent.postMessage({ pluginMessage: { 
           type: 'NAVIGATE',
-          route: 'editor',
+          route: 'editor-empty',
           fromRoute: 'intro4'
         } }, '*')
       }

@@ -12,8 +12,12 @@ export async function onAddAnnotation(textNodeData: TextNodeData, containerNodeD
     console.error('Node not found or not a text node:', textNodeData.id);
     return;
   }
+  
+  if (!containerNodeData.fillColor || (!containerNodeData.fillColor.variableName && !containerNodeData.fillColor.hex)) {
+    console.error('Container node data missing fill color information');
+    return;
+  }
 
-  // Create a markdown annotation with detailed information
   const annotationMarkdown = `# The text color is controlled by color-contrast()
     Use the following CSS property to automatically determine the text color based on the background color:
     
@@ -24,12 +28,10 @@ color: color-contrast(
 \`\`\`
   `;
 
-  // Add the annotation to the node
   node.annotations = [{
     labelMarkdown: annotationMarkdown,
   }];
 
-  // Notify the UI that an annotation was added
   figma.ui.postMessage({ 
     type: 'ANNOTATION_ADDED',
     nodeId: node.id,

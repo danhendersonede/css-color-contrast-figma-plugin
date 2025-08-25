@@ -5,17 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Menu - color-contrast()</title>
 </head>
-<body>
-  <div class="inverted container centered">
-    <!-- Navigation bar with close button -->
+<body class="inverted">
+  <header class="header centered">
     <nav>
-      <div></div> <!-- Spacer for flexbox alignment -->
+      <div></div>
       <button class="btn btn-secondary" id="close-button">
         Close
       </button>
     </nav>
     
-    <!-- Logo -->
     <div class="logo">
       <svg viewBox="0 0 337 217" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="106.5" cy="108.5" r="86.5" fill="black" stroke="white" stroke-width="8"/>
@@ -25,19 +23,19 @@
     </div>
     
     <h1>color-contrast()</h1>
-    
-    <!-- Button group -->
-    <div class="button-group vertical">
-      <button class="btn btn-secondary" id="tutorial-button">
-        Tutorial
-      </button>
-      <a href="https://caniuse.com/mdn-css_types_color_contrast-color" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-        Can I Use
-      </a>
-      <a href="https://github.com/danhendersonede/css-color-contrast-figma-plugin/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-        Feedback
-      </a>
-    </div>
+  </header>
+  
+  <!-- Button group -->
+  <div class="container inset centered button-group vertical">
+    <button class="btn btn-secondary" id="tutorial-button">
+      Tutorial
+    </button>
+    <a href="https://caniuse.com/mdn-css_types_color_contrast-color" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+      Can I Use
+    </a>
+    <a href="https://github.com/danhendersonede/css-color-contrast-figma-plugin/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+      Feedback
+    </a>
   </div>
   
   <script>
@@ -45,7 +43,7 @@
       parent.postMessage({ 
         pluginMessage: { 
           type: 'NAVIGATE',
-          route: 'editor',
+          route: 'editor-empty',
           fromRoute: 'menu'
         }
       }, '*');

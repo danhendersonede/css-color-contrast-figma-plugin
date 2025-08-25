@@ -15,10 +15,8 @@ export async function applyColorContrastToSelectedNode(textNodeData: TextNodeDat
 
       node.setSharedPluginData('color_contrast', 'enabled', 'true');
       
-      // Add developer annotation
       await onAddAnnotation(textNodeData, containerNodeData);
 
-      // Create updated text node data
       const updatedTextNodeData: TextNodeData = {
         id: textNodeData.id,
         type: textNodeData.type,
@@ -29,7 +27,6 @@ export async function applyColorContrastToSelectedNode(textNodeData: TextNodeDat
         }
       };
 
-      // Update the UI to reflect the changes
       figma.ui.postMessage({
         type: 'SELECTION_CHANGE_TEXT_NODE',
         textNodeData: updatedTextNodeData,

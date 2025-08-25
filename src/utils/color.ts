@@ -6,7 +6,6 @@ export function RGBToHex(color: RGB) {
     let g = color.g;
     let b = color.b;
 
-    // Convert 0-1 range to 0-255 if needed
     if (r <= 1 && g <= 1 && b <= 1) {
         r = Math.round(r * 255);
         g = Math.round(g * 255);
@@ -28,7 +27,6 @@ export function RGBToHex(color: RGB) {
 }
 
 function getLuminance(color: RGB): number {
-    // Normalize RGB values to 0-1 range if they're in 0-255
     const normalizedColor = {
         r: color.r > 1 ? color.r / 255 : color.r,
         g: color.g > 1 ? color.g / 255 : color.g,

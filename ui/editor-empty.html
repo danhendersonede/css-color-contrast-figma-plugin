@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Node</title>
+  </head>
+  <body>
+    <main class="container">
+      <header class="header inverted centered">
+        <nav>
+          <span></span>
+          <button id="help-button" class="btn btn-secondary">
+            Menu
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="8" cy="5.5" r="1" fill="currentColor"/>
+              <circle cx="8" cy="8" r="1" fill="currentColor"/>
+              <circle cx="8" cy="10.5" r="1" fill="currentColor"/>
+            </svg>
+          </button>
+        </nav>
+        <div class="logo">
+          <svg viewBox="0 0 337 217" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="106.5" cy="108.5" r="86.5" fill="black" stroke="white" stroke-width="8"/>
+            <circle cx="168.5" cy="108.5" r="86.5" fill="#5A5A5A" stroke="white" stroke-width="8"/>
+            <circle cx="230.5" cy="108.5" r="86.5" fill="white" stroke="white" stroke-width="8"/>
+          </svg>
+        </div>
+        <h1>color-contrast()</h1>
+      </header>
+      <div class="container inset gap">
+        <p class="center">Select a text layer to get started.</p>
+      </div>
+    </main>
+    <script>      
+      document.getElementById('help-button').addEventListener('click', () => {
+        parent.postMessage({ pluginMessage: {
+          type: 'NAVIGATE',
+          route: 'menu',
+          fromRoute: 'editor-empty'
+        }}, '*');
+      });
+    </script>
+  </body>
+</html>

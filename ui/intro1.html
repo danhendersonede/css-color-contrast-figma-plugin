@@ -38,7 +38,7 @@
       document.getElementById('skip').onclick = () => {
         parent.postMessage({ pluginMessage: { 
           type: 'NAVIGATE',
-          route: 'editor',
+          route: 'editor-empty',
           fromRoute: 'intro1'
         } }, '*')
       }

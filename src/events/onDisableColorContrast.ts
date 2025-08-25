@@ -10,7 +10,6 @@ export async function disableColorContrastOnSelectedNode(
     return;
   }
 
-  // Update the shared plugin data
   node.setSharedPluginData('color_contrast', 'enabled', 'false');
   node.setSharedPluginData('color_contrast', 'containerNodeData', '');
 
@@ -25,7 +24,6 @@ export async function disableColorContrastOnSelectedNode(
 
   node.annotations = newAnnotations;
 
-  // Create updated text node data
   const updatedTextNodeData: TextNodeData = {
     id: textNodeData.id,
     type: textNodeData.type,
@@ -36,7 +34,6 @@ export async function disableColorContrastOnSelectedNode(
     }
   };
 
-  // Update the UI to reflect the changes
   figma.ui.postMessage({
     type: 'SELECTION_CHANGE_TEXT_NODE',
     textNodeData: updatedTextNodeData,

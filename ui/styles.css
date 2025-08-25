@@ -212,109 +212,9 @@ nav {
   min-height: 38px;
 }
 
-/* Groups and Sections */
-.group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
+/* REMOVED: Old group and swatch system - replaced with new editor components */
 
-.group > h2 {
-  background-color: var(--color-primary);
-  color: var(--color-secondary);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
-}
-
-/* Color Swatches */
-.swatch {
-  display: flex;
-  gap: var(--spacing-md);
-}
-
-.swatch-visual {
-  height: var(--swatch-size);
-  width: var(--swatch-size);
-  flex-shrink: 0;
-  border-radius: var(--border-radius-md);
-  border: 2px solid #000000;
-  font-size: 11px;
-  text-align: center;
-  display: flex;
-  align-items: end;
-  justify-content: center;
-}
-
-.swatch-visual.small {
-  height: var(--swatch-size-small);
-  width: var(--swatch-size-small);
-}
-
-.swatch-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.swatch .main-value {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.swatch .sub-value {
-  font-size: 1rem;
-  color: var(--color-tertiary);
-  overflow-x: hidden;
-  text-wrap-mode: nowrap;
-  text-overflow: ellipsis;
-  width: 234px;
-}
-
-/* ============================================
-   SCREEN-SPECIFIC STYLES
-   ============================================ */
-/* Editor Screen */
-#current-color .sub-value {
-  width: 250px;
-}
-
-#automatic-swatch > div {
-  display: flex;
-  gap: var(--spacing-md);
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-#automatic-swatch-visual-white {
-  background-color: #FFFFFF;
-}
-
-#automatic-swatch-visual-black {
-  background-color: #000000;
-  color: #FFFFFF;
-}
-
-#automatic-swatch-details {
-  font-size: var(--paragraph-md-size);
-  font-weight: 600;
-  color: var(--color-tertiary);
-}
-
-#automatic-swatch-details .new-color-swatch-value {
-  font-size: var(--paragraph-lg-size);
-  color: var(--color-primary);
-}
-
-#automatic-swatch-details .new-color-swatch-value.largest {
-  font-weight: bold;
-  font-size: var(--paragraph-lg-size);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--border-radius-md);
-}
-
-#disable-color-contrast {
-  background-color: var(--color-primary);
-}
+/* REMOVED: Old editor-specific styles - replaced with new component system */
 
 
 /* ============================================
@@ -407,6 +307,169 @@ code {
   background: none;
   padding: 0;
   color: inherit;
+}
+
+/* ============================================
+   EDITOR REDESIGN - NEW COMPONENTS
+   ============================================ */
+
+/* Dynamic hero for editor - flexible height based on content */
+.hero-dynamic {
+  height: auto;
+  min-height: 250px;
+  padding: var(--spacing-xl);
+  justify-content: space-between;
+}
+
+/* Small logo for navigation */
+.logo-small {
+  width: 40px;
+  height: auto;
+  margin: 0;
+}
+
+.logo-small svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hero content area */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl) 0;
+}
+
+/* Color information blocks */
+.color-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.color-label {
+  margin: 0;
+  font-size: var(--paragraph-lg-size);
+  font-weight: 400;
+  color: var(--color-primary-inverted);
+  text-align: center;
+}
+
+/* Inline color display */
+.color-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.color-swatch {
+  width: 21px;
+  height: 21px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-primary-inverted);
+  flex-shrink: 0;
+}
+
+.color-value {
+  font-size: var(--paragraph-lg-size);
+  font-weight: 400;
+  color: var(--color-primary-inverted);
+}
+
+.contrast-ratio {
+  font-size: var(--paragraph-md-size);
+  font-weight: 400;
+  color: var(--color-primary-inverted);
+}
+
+/* Content section components */
+.contrast-title {
+  margin: 0;
+  font-family: var(--code-md-family);
+  font-weight: var(--code-md-weight);
+  font-size: var(--paragraph-lg-size);
+  letter-spacing: var(--code-md-letter-spacing);
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.contrast-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.result-display {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.result-swatch {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-primary);
+  flex-shrink: 0;
+}
+
+.result-value {
+  font-size: var(--heading-lg-size);
+  font-weight: var(--heading-lg-weight);
+  color: var(--color-primary);
+  letter-spacing: -1.52px;
+}
+
+.contrast-comparison {
+  margin: 0;
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.ratio-new {
+  font-size: var(--paragraph-md-size);
+  font-weight: var(--paragraph-md-bold-weight);
+}
+
+.ratio-separator {
+  font-size: var(--paragraph-lg-size);
+  font-weight: 400;
+}
+
+.ratio-old {
+  font-size: var(--paragraph-md-size);
+  font-weight: 400;
+}
+
+/* ============================================
+   EDITOR COMPONENTS - CLEAN LAYOUT
+   ============================================ */
+
+/* Small logo for active state navigation */
+.logo-small {
+  width: 40px;
+  height: auto;
+}
+
+.logo-small svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hero content layout for color information */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
 }
 
 /* ============================================
