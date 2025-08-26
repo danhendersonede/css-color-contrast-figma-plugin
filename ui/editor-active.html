@@ -6,15 +6,14 @@
     <title>Color Contrast Editor</title>
   </head>
   <body>
-    <main class="container">
-      <header class="header inverted">
-        <!-- Navigation with logo and menu -->
+    <main class="editor-view">
+      <header class="header theme-dynamic theme-dark">
         <nav>
           <div class="logo-small">
             <svg viewBox="0 0 337 217" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="106.5" cy="108.5" r="86.5" fill="black" stroke="white" stroke-width="8"/>
-              <circle cx="168.5" cy="108.5" r="86.5" fill="#5A5A5A" stroke="white" stroke-width="8"/>
-              <circle cx="230.5" cy="108.5" r="86.5" fill="white" stroke="white" stroke-width="8"/>
+              <circle cx="106.5" cy="108.5" r="86.5" fill="black" stroke="currentColor" stroke-width="8"/>
+              <circle cx="168.5" cy="108.5" r="86.5" fill="#5A5A5A" stroke="currentColor" stroke-width="8"/>
+              <circle cx="230.5" cy="108.5" r="86.5" fill="white" stroke="currentColor" stroke-width="8" class="logo-circle-3"/>
             </svg>
           </div>
           <button id="help-button" class="btn btn-secondary">
@@ -33,37 +32,29 @@
           <div id="hero-background-display" class="color-info">
             <p class="color-label">Background:</p>
             <div class="color-display">
-              <div id="hero-background-swatch" class="color-swatch"></div>
               <span id="hero-background-value" class="color-value"></span>
-            </div>
-          </div>
-          <div id="hero-text-display" class="color-info">
-            <p class="color-label">Current Text Color:</p>
-            <div class="color-display">
-              <div id="hero-text-swatch" class="color-swatch"></div>
-              <span id="hero-text-value" class="color-value"></span>
-              <span id="hero-text-contrast" class="contrast-ratio"></span>
             </div>
           </div>
         </div>
       </header>
 
       <div class="container inset gap">
-        <!-- New Clean Design Matching Figma 5-438 -->
-        <div class="contrast-title" id="contrast-function-title">color-contrast(#903030)</div>
+        <div class="contrast-title" id="contrast-function-title">color-contrast(–)</div>
         
-        <div class="contrast-result">
-          <div class="result-display">
-            <div class="result-swatch" id="result-color-swatch"></div>
-            <div class="result-value" id="result-color-value">#ffffff</div>
+        <div class="hero-content">
+          <div class="contrast-result">
+            <div class="result-display">
+              <div class="result-swatch" id="result-color-swatch"></div>
+              <div class="result-value" id="result-color-value">–</div>
+            </div>
           </div>
-        </div>
 
-        <p class="contrast-comparison">
-          <span class="ratio-new" id="new-contrast-ratio">(7.92:1)</span>
-          <span class="ratio-separator"> > </span>
-          <span class="ratio-old" id="current-contrast-ratio">(2.65:1)</span>
-        </p>
+          <p class="contrast-comparison">
+            <span class="ratio-new" id="new-contrast-ratio">(–)</span>
+            <span class="ratio-separator"> > </span>
+            <span class="ratio-old" id="current-contrast-ratio">(–)</span>
+          </p>
+        </div>
 
         <button id="apply-color-contrast" class="btn btn-primary btn-full hidden">Use color-contrast()</button>
         <button id="disable-color-contrast" class="btn btn-primary btn-full hidden">Remove color-contrast()</button>
@@ -73,7 +64,6 @@
       let textNodeData = null;
       let containerNodeData = null;
 
-      // New Clean Element Selectors
       const contrastFunctionTitle = document.querySelector('#contrast-function-title');
       const resultColorSwatch = document.querySelector('#result-color-swatch');
       const resultColorValue = document.querySelector('#result-color-value');
@@ -83,11 +73,52 @@
       const disableColorContrastButton = document.querySelector('#disable-color-contrast');
 
       // Hero section elements
-      const heroBackgroundSwatchElement = document.querySelector('#hero-background-swatch');
       const heroBackgroundValueElement = document.querySelector('#hero-background-value');
-      const heroTextSwatchElement = document.querySelector('#hero-text-swatch');
-      const heroTextValueElement = document.querySelector('#hero-text-value');
-      const heroTextContrastElement = document.querySelector('#hero-text-contrast');
+      const headerElement = document.querySelector('.header');
+
+      // Calculate luminance for theme detection
+      function getLuminance(hexColor) {
+        // Convert hex to RGB
+        const hex = hexColor.replace('#', '');
+        const r = parseInt(hex.substr(0, 2), 16) / 255;
+        const g = parseInt(hex.substr(2, 2), 16) / 255;
+        const b = parseInt(hex.substr(4, 2), 16) / 255;
+
+        // Calculate relative luminance
+        const [rs, gs, bs] = [r, g, b].map(c => {
+          return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+      }
+
+      // Calculate contrast ratio between two colors
+      function getContrastRatio(lum1, lum2) {
+        const lighter = Math.max(lum1, lum2);
+        const darker = Math.min(lum1, lum2);
+        return (lighter + 0.05) / (darker + 0.05);
+      }
+
+      // Apply theme based on background color
+      function applyTheme(hexColor) {
+        const bgLuminance = getLuminance(hexColor);
+        
+        // Calculate contrast ratios with both black and white
+        const blackLuminance = 0; 
+        const whiteLuminance = 1;
+        
+        const contrastWithBlack = getContrastRatio(bgLuminance, blackLuminance);
+        const contrastWithWhite = getContrastRatio(bgLuminance, whiteLuminance);
+        
+        const useWhiteText = contrastWithWhite > contrastWithBlack;
+        const textColor = useWhiteText ? '#ffffff' : '#000000';
+        
+        document.documentElement.style.setProperty('--theme-bg', hexColor);
+        document.documentElement.style.setProperty('--theme-text', textColor);
+        document.documentElement.style.setProperty('--theme-stroke', textColor);
+        
+        headerElement.classList.remove('theme-dark', 'theme-light');
+        headerElement.classList.add(useWhiteText ? 'theme-dark' : 'theme-light');
+      }
 
 
       function updateTextNodeState(data) {
@@ -95,8 +126,10 @@
         containerNodeData = data.containerNodeData;
 
         if (containerNodeData && containerNodeData.fillColor && containerNodeData.fillColor.hex && containerNodeData.colorContrast) {
-          heroBackgroundSwatchElement.style.backgroundColor = containerNodeData.fillColor.hex;
-          heroBackgroundValueElement.textContent = containerNodeData.fillColor.hex;
+          const backgroundColor = containerNodeData.fillColor.hex;
+          heroBackgroundValueElement.textContent = backgroundColor;
+          
+          applyTheme(backgroundColor);
           
           contrastFunctionTitle.textContent = `color-contrast(${containerNodeData.fillColor.hex})`;
           
@@ -114,17 +147,12 @@
             const currentContrast = Number(containerNodeData.colorContrast.currentTextContrast) || 0;
             currentContrastRatio.textContent = `(${currentContrast.toFixed(2)}:1)`;
           } else {
-            currentContrastRatio.textContent = '(0.00:1)';
+            currentContrastRatio.textContent = '(–)';
           }
         } else {
-          contrastFunctionTitle.textContent = 'color-contrast(#000000)';
-          newContrastRatio.textContent = '(0.00:1)';
-          currentContrastRatio.textContent = '(0.00:1)';
-        }
-
-        if (textNodeData && textNodeData.fillColor && textNodeData.fillColor.hex) {
-          heroTextSwatchElement.style.backgroundColor = textNodeData.fillColor.hex;
-          heroTextValueElement.textContent = textNodeData.fillColor.hex;
+          contrastFunctionTitle.textContent = 'color-contrast(–)';
+          newContrastRatio.textContent = '(–)';
+          currentContrastRatio.textContent = '(–)';
         }
 
         const isEnabled = textNodeData?.pluginData?.enabled === true;

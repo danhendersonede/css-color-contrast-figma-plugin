@@ -7,7 +7,12 @@
   --color-primary-inverted: #ffffff;
   --color-secondary: #ffffff;
   --color-secondary-inverted: #000000;
-  --color-tertiary: #5a5a5a;  
+  --color-tertiary: #5a5a5a;
+  
+  /* Dynamic Theme Variables */
+  --theme-bg: #000000;
+  --theme-text: #ffffff;
+  --theme-stroke: #ffffff;
   
   /* Typography Scale */
   --heading-lg-size: 2.375rem;        /* 38px */
@@ -44,7 +49,7 @@
   --btn-secondary-hover: rgba(0, 0, 0, 0.1);
   
   /* Logo component sizing */
-  --logo-size: 7.5rem;                /* 120px */
+  --logo-size: 100PX;              
 }
 
 /* ============================================
@@ -118,8 +123,9 @@ nav {
   padding: var(--spacing-xxl) var(--spacing-xl);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   gap: var(--spacing-md);
+  height: 250px;
+  min-height: 250px;
 }
 
 .header.centered {
@@ -212,11 +218,6 @@ nav {
   min-height: 38px;
 }
 
-/* REMOVED: Old group and swatch system - replaced with new editor components */
-
-/* REMOVED: Old editor-specific styles - replaced with new component system */
-
-
 /* ============================================
    INVERTED THEME
    ============================================ */
@@ -225,6 +226,25 @@ nav {
 .inverted {
   background: var(--color-secondary-inverted);
   color: var(--color-primary-inverted);
+}
+
+/* Dynamic theme for editor header */
+.header.theme-dynamic {
+  background: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+.header.theme-dynamic .btn-secondary {
+  border-color: var(--theme-stroke);
+  color: var(--theme-text);
+}
+
+.header.theme-dynamic .btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.header.theme-light .btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* ============================================
@@ -266,12 +286,14 @@ nav {
   display: flex;
   gap: var(--spacing-xl);
   width: 100%;
-  max-width: 280px;
-  margin-top: var(--spacing-xl);
 }
 
 .button-group.vertical {
   flex-direction: column;
+}
+
+.button-group.vertical .btn {
+    width: 100%;
 }
 
 /* Full width button modifier */
@@ -310,28 +332,22 @@ code {
 }
 
 /* ============================================
-   EDITOR REDESIGN - NEW COMPONENTS
+   EDITOR STYLES
    ============================================ */
 
-/* Dynamic hero for editor - flexible height based on content */
-.hero-dynamic {
-  height: auto;
-  min-height: 250px;
-  padding: var(--spacing-xl);
-  justify-content: space-between;
+.editor-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-/* Small logo for navigation */
-.logo-small {
-  width: 40px;
-  height: auto;
-  margin: 0;
+/* Dynamic third circle stroke based on theme */
+.theme-dark .logo-circle-3 {
+  stroke: white !important;
 }
 
-.logo-small svg {
-  width: 100%;
-  height: auto;
-  display: block;
+.theme-light .logo-circle-3 {
+  stroke: black !important;
 }
 
 /* Hero content area */
@@ -339,8 +355,8 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-xl);
-  padding: var(--spacing-xl) 0;
+  justify-content: center;
+  height: 100%;
 }
 
 /* Color information blocks */
@@ -359,6 +375,11 @@ code {
   text-align: center;
 }
 
+/* Theme-specific color label */
+.theme-dynamic .color-label {
+  color: var(--theme-text);
+}
+
 /* Inline color display */
 .color-display {
   display: flex;
@@ -371,7 +392,7 @@ code {
   width: 21px;
   height: 21px;
   border-radius: var(--border-radius-md);
-  border: 1px solid var(--color-primary-inverted);
+  border: 1px solid var(--theme-text);
   flex-shrink: 0;
 }
 
@@ -381,10 +402,20 @@ code {
   color: var(--color-primary-inverted);
 }
 
+/* Theme-specific color value */
+.theme-dynamic .color-value {
+  color: var(--theme-text);
+}
+
 .contrast-ratio {
   font-size: var(--paragraph-md-size);
   font-weight: 400;
   color: var(--color-primary-inverted);
+}
+
+/* Theme-specific contrast ratio */
+.theme-dynamic .contrast-ratio {
+  color: var(--theme-text);
 }
 
 /* Content section components */
@@ -392,7 +423,7 @@ code {
   margin: 0;
   font-family: var(--code-md-family);
   font-weight: var(--code-md-weight);
-  font-size: var(--paragraph-lg-size);
+  font-size: var(--paragraph-md-size);
   letter-spacing: var(--code-md-letter-spacing);
   text-align: center;
   color: var(--color-primary);
@@ -447,11 +478,6 @@ code {
   font-weight: 400;
 }
 
-/* ============================================
-   EDITOR COMPONENTS - CLEAN LAYOUT
-   ============================================ */
-
-/* Small logo for active state navigation */
 .logo-small {
   width: 40px;
   height: auto;
@@ -461,15 +487,6 @@ code {
   width: 100%;
   height: auto;
   display: block;
-}
-
-/* Hero content layout for color information */
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-xl);
-  padding: var(--spacing-xl);
 }
 
 /* ============================================
