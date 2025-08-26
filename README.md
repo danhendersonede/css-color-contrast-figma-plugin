@@ -1,40 +1,142 @@
-Below are the steps to get your plugin running. You can also find instructions at:
+# CSS color-contrast() Figma Plugin
 
-  https://www.figma.com/plugin-docs/plugin-quickstart-guide/
+> Explore the future of accessible design with the experimental CSS `color-contrast()` function
 
-This plugin template uses Typescript and NPM, two standard tools in creating JavaScript applications.
+## Overview
 
-First, download Node.js which comes with NPM. This will allow you to install TypeScript and other
-libraries. You can find the download link here:
+This educational Figma plugin emulates the behavior of the experimental CSS `color-contrast()` function, helping designers understand how automatic color contrast selection will work in future browsers. The plugin demonstrates how this CSS feature can simplify accessible design decisions by automatically choosing between black or white text based on background colors.
 
-  https://nodejs.org/en/download/
+### What is `color-contrast()`?
 
-Next, install TypeScript using the command:
+The `color-contrast()` function is an experimental CSS feature that will automatically select the most readable text color (black or white) based on a background color, using WCAG contrast algorithms:
 
-  npm install -g typescript
+```css
+/* Automatically returns black or white */
+color: color-contrast(#903030);
 
-Finally, in the directory of your plugin, get the latest type definitions for the plugin API by running:
+/* Works with CSS-based design tokens */
+color: color-contrast(var(--background-color));
+```
 
-  npm install --save-dev @figma/plugin-typings
+## Features
 
-If you are familiar with JavaScript, TypeScript will look very familiar. In fact, valid JavaScript code
-is already valid Typescript code.
+- 🎓 **Tutorial** - 4-step introduction to the `color-contrast()` concept
+- ⚡ **Live Emulation** - See how the function would behave in your designs today
+- 🎯 **WCAG Algorithms** - Uses the same contrast calculations the CSS function will use
+- 📦 **Batch Processing** - Apply to multiple text layers or entire frames at once
+- 🔍 **Smart Selection** - Works with text nodes and container frames
 
-TypeScript adds type annotations to variables. This allows code editors such as Visual Studio Code
-to provide information about the Figma API while you are writing code, as well as help catch bugs
-you previously didn't notice.
+## Installation
 
-For more information, visit https://www.typescriptlang.org/
+### From Figma Community
 
-Using TypeScript requires a compiler to convert TypeScript (code.ts) into JavaScript (code.js)
-for the browser to run.
+1. Visit the plugin page (coming soon) in Figma Community
+2. Click "Try it out" to install
+3. Access via Plugins menu in any Figma file
 
-We recommend writing TypeScript code using Visual Studio code:
+### Development Setup
 
-1. Download Visual Studio Code if you haven't already: https://code.visualstudio.com/.
-2. Open this directory in Visual Studio Code.
-3. Compile TypeScript to JavaScript: Run the "Terminal > Run Build Task..." menu item,
-    then select "npm: watch". You will have to do this again every time
-    you reopen Visual Studio Code.
+```bash
+# Install dependencies
+npm install
 
-That's it! Visual Studio Code will regenerate the JavaScript file every time you save.
+# Development mode with hot reload
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## Usage
+
+### Basic Workflow
+
+1. **Select a text layer** 
+2. **Apply color-contrast()** to automatically set text to black or white
+3. **Add annotations in DevMode**
+4. **Disable if needed**
+
+### Supported Node Types
+
+- **Text Nodes** - Must be inside a valid container (frame, component, instance, group, or section)
+
+## How It Works
+
+The plugin emulates upcoming browser support for color-contrast() by using the WCAG 2.x luminance formula to calculate contrast ratios:
+
+1. Extracts the background color from the parent container
+2. Calculates contrast ratios for both black and white
+3. Selects the color with the higher contrast ratio
+4. Applies the optimal color to text nodes
+
+### Example Calculation
+
+For a background color of `#903030`:
+- White text: 7.92:1 contrast ratio ✅
+- Black text: 2.65:1 contrast ratio
+
+Result: White text is applied
+
+## Development
+
+### Project Structure
+
+```
+color-contrast/
+├── src/
+│   ├── code.ts              # Plugin main entry point
+│   ├── state/               # State management
+│   ├── events/              # Event handlers
+│   ├── messaging/           # Plugin-UI communication
+│   └── utils/               # Color calculations
+├── ui/                      # HTML interface files
+├── dist/                    # Build output
+└── webpack.config.js        # Build configuration
+```
+
+### Architecture
+
+- **Singleton Pattern** for state management (`NodeStateManager`)
+- **Event-driven** message passing between plugin and UI
+- **Type-safe** messaging with TypeScript interfaces
+- **Hot-reload** support for UI development
+
+### Commands
+
+```bash
+# Lint TypeScript files
+npm run lint
+
+# Auto-fix linting issues
+npm run lint:fix
+
+# Watch mode for development
+npm run dev
+
+# Production build
+npm run build
+```
+
+## Learn More
+
+- [CSS color-contrast() Specification](https://www.w3.org/TR/css-color-5/#colorcontrast)
+- [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-contrast)
+- [WCAG Contrast Guidelines](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)
+- [Can I Use: color-contrast()](https://caniuse.com/css-color-contrast)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Support
+
+- 🐛 [Report bugs](https://github.com/danhendersonede/color-contrast/issues)
+- 💡 [Request features](https://github.com/danhendersonede/color-contrast/issues)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Disclaimer:** This plugin is for educational purposes to explore an experimental CSS feature. The `color-contrast()` function is not yet suitable for production use in web development.
