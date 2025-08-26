@@ -26,6 +26,7 @@ export type FillColorData = {
 export type ColorContrastData = {
   white: number | null;
   black: number | null;
+  currentTextContrast?: number | null;
 }
 
 export type PluginData = {

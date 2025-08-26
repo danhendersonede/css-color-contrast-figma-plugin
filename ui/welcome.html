@@ -6,12 +6,21 @@
     <title>color-contrast()</title>
   </head>
   <body>
-    <main>
-      <h1 class="center">color-contrast()</h1>
-
-      <p>The first Figma plugin for CSS's <code>color-contrast()</code>. Explore how it could shape the future of design.</p>
-
-      <button id="start">Get Started</button> 
+    <main class="container">
+      <div class="header inverted centered">
+        <div class="logo">
+          <svg viewBox="0 0 337 217" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="106.5" cy="108.5" r="86.5" fill="black" stroke="white" stroke-width="8"/>
+            <circle cx="168.5" cy="108.5" r="86.5" fill="#5A5A5A" stroke="white" stroke-width="8"/>
+            <circle cx="230.5" cy="108.5" r="86.5" fill="white" stroke="white" stroke-width="8"/>
+          </svg>
+        </div>
+        <h1>color-contrast()</h1>
+      </div>
+      <div class="container inset gap">
+        <p>The first Figma plugin for CSS's <code>color-contrast()</code>. Explore how it could shape how we design.</p>
+        <button id="start" class="btn btn-primary btn-full">Get started</button>
+      </div>
     </main>
     <script>      
       document.getElementById('start').onclick = () => {

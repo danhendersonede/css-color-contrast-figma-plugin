@@ -6,26 +6,42 @@
     <title>color-contrast()</title>
   </head>
   <body>
-    <main>
-      <hgroup>
-        <p>Intro: 1 of 4</p>
-        <h1>Before you start!</h1>
-      </hgroup>
-
-      <p><code>color-contrast()</code> is an experimental CSS function that picks either black or white, depending on which has better contrast on a background color.</p>
-
-      <p>This plugin is a tool to help you explore how it could shape the future of design.</p>
-
-      <button id="start">Continue</button> 
+    <main class="container">
+      <div class="header inverted">
+        <nav>
+          <p>Intro: 1 of 4</p>
+          <button id="skip" class="btn btn-secondary">
+            Skip tutorial
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M5.5 6L7.5 8L5.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 6L11 8L9 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </nav>
+        <h1>Before you start.</h1>
+      </div>
+      <div class="container inset gap">
+        <p><code>color-contrast()</code> is an experimental CSS function that tells the browser to display black or white.</p>
+        <p>By providing the browser a single color (likely the background token), the function uses the WCAG 2.X contrast algorithm to return the most perceivable color.</p>
+        <button id="next" class="btn btn-primary btn-full">Next</button>
+      </div>
     </main>
     <script>      
-      document.getElementById('start').onclick = () => {
+      document.getElementById('next').onclick = () => {
         parent.postMessage({ pluginMessage: { 
           type: 'NAVIGATE',
           route: 'intro2',
           fromRoute: 'intro1'
         } }, '*')
-      }  
+      }
+      document.getElementById('skip').onclick = () => {
+        parent.postMessage({ pluginMessage: { 
+          type: 'NAVIGATE',
+          route: 'editor-empty',
+          fromRoute: 'intro1'
+        } }, '*')
+      }
     </script>
   </body>
 </html>

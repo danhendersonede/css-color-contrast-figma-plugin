@@ -11,13 +11,14 @@
   ],
   "ui": {
     "welcome": "dist/ui/welcome.html",
-    "editor": "dist/ui/editor.html",
+    "editor-empty": "dist/ui/editor-empty.html",
+    "editor-active": "dist/ui/editor-active.html",
     "intro1": "dist/ui/intro1.html",
     "intro2": "dist/ui/intro2.html",
     "intro3": "dist/ui/intro3.html",
     "intro4": "dist/ui/intro4.html",
     "loading": "dist/ui/loading.html",
-    "help": "dist/ui/help.html"
+    "menu": "dist/ui/menu.html"
   },
   "networkAccess": {
     "allowedDomains": [

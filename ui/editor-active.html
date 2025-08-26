@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Contrast Editor</title>
+  </head>
+  <body>
+    <main class="editor-view">
+      <header class="header theme-dynamic theme-dark">
+        <nav>
+          <div class="logo-small">
+            <svg viewBox="0 0 337 217" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="106.5" cy="108.5" r="86.5" fill="black" stroke="currentColor" stroke-width="8"/>
+              <circle cx="168.5" cy="108.5" r="86.5" fill="#5A5A5A" stroke="currentColor" stroke-width="8"/>
+              <circle cx="230.5" cy="108.5" r="86.5" fill="white" stroke="currentColor" stroke-width="8" class="logo-circle-3"/>
+            </svg>
+          </div>
+          <button id="help-button" class="btn btn-secondary">
+            Menu
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="8" cy="5.5" r="1" fill="currentColor"/>
+              <circle cx="8" cy="8" r="1" fill="currentColor"/>
+              <circle cx="8" cy="10.5" r="1" fill="currentColor"/>
+            </svg>
+          </button>
+        </nav>
+
+        <!-- Color information display -->
+        <div id="color-info" class="hero-content">
+          <div id="hero-background-display" class="color-info">
+            <p class="color-label">Background:</p>
+            <div class="color-display">
+              <span id="hero-background-value" class="color-value"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="container inset gap">
+        <div class="contrast-title" id="contrast-function-title">color-contrast(–)</div>
+        
+        <div class="hero-content">
+          <div class="contrast-result">
+            <div class="result-display">
+              <div class="result-swatch" id="result-color-swatch"></div>
+              <div class="result-value" id="result-color-value">–</div>
+            </div>
+          </div>
+
+          <p class="contrast-comparison">
+            <span class="ratio-new" id="new-contrast-ratio">(–)</span>
+            <span class="ratio-separator"> > </span>
+            <span class="ratio-old" id="current-contrast-ratio">(–)</span>
+          </p>
+        </div>
+
+        <button id="apply-color-contrast" class="btn btn-primary btn-full hidden">Use color-contrast()</button>
+        <button id="disable-color-contrast" class="btn btn-primary btn-full hidden">Remove color-contrast()</button>
+      </div>
+    </main>
+    <script>
+      let textNodeData = null;
+      let containerNodeData = null;
+
+      const contrastFunctionTitle = document.querySelector('#contrast-function-title');
+      const resultColorSwatch = document.querySelector('#result-color-swatch');
+      const resultColorValue = document.querySelector('#result-color-value');
+      const newContrastRatio = document.querySelector('#new-contrast-ratio');
+      const currentContrastRatio = document.querySelector('#current-contrast-ratio');
+      const applyColorContrastButton = document.querySelector('#apply-color-contrast');
+      const disableColorContrastButton = document.querySelector('#disable-color-contrast');
+
+      // Hero section elements
+      const heroBackgroundValueElement = document.querySelector('#hero-background-value');
+      const headerElement = document.querySelector('.header');
+
+      // Calculate luminance for theme detection
+      function getLuminance(hexColor) {
+        // Convert hex to RGB
+        const hex = hexColor.replace('#', '');
+        const r = parseInt(hex.substr(0, 2), 16) / 255;
+        const g = parseInt(hex.substr(2, 2), 16) / 255;
+        const b = parseInt(hex.substr(4, 2), 16) / 255;
+
+        // Calculate relative luminance
+        const [rs, gs, bs] = [r, g, b].map(c => {
+          return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+      }
+
+      // Calculate contrast ratio between two colors
+      function getContrastRatio(lum1, lum2) {
+        const lighter = Math.max(lum1, lum2);
+        const darker = Math.min(lum1, lum2);
+        return (lighter + 0.05) / (darker + 0.05);
+      }
+
+      // Apply theme based on background color
+      function applyTheme(hexColor) {
+        const bgLuminance = getLuminance(hexColor);
+        
+        // Calculate contrast ratios with both black and white
+        const blackLuminance = 0; 
+        const whiteLuminance = 1;
+        
+        const contrastWithBlack = getContrastRatio(bgLuminance, blackLuminance);
+        const contrastWithWhite = getContrastRatio(bgLuminance, whiteLuminance);
+        
+        const useWhiteText = contrastWithWhite > contrastWithBlack;
+        const textColor = useWhiteText ? '#ffffff' : '#000000';
+        
+        document.documentElement.style.setProperty('--theme-bg', hexColor);
+        document.documentElement.style.setProperty('--theme-text', textColor);
+        document.documentElement.style.setProperty('--theme-stroke', textColor);
+        
+        headerElement.classList.remove('theme-dark', 'theme-light');
+        headerElement.classList.add(useWhiteText ? 'theme-dark' : 'theme-light');
+      }
+
+
+      function updateTextNodeState(data) {
+        textNodeData = data.textNodeData;
+        containerNodeData = data.containerNodeData;
+
+        if (containerNodeData && containerNodeData.fillColor && containerNodeData.fillColor.hex && containerNodeData.colorContrast) {
+          const backgroundColor = containerNodeData.fillColor.hex;
+          heroBackgroundValueElement.textContent = backgroundColor;
+          
+          applyTheme(backgroundColor);
+          
+          contrastFunctionTitle.textContent = `color-contrast(${containerNodeData.fillColor.hex})`;
+          
+          const whiteContrast = Number(containerNodeData.colorContrast.white) || 0;
+          const blackContrast = Number(containerNodeData.colorContrast.black) || 0;
+          const bestColor = whiteContrast > blackContrast ? '#ffffff' : '#000000';
+          const bestContrastRatio = Math.max(whiteContrast, blackContrast) || 0;
+          
+          resultColorSwatch.style.backgroundColor = bestColor;
+          resultColorValue.textContent = bestColor;
+          
+          newContrastRatio.textContent = `(${bestContrastRatio.toFixed(2)}:1)`;
+          
+          if (containerNodeData.colorContrast.currentTextContrast) {
+            const currentContrast = Number(containerNodeData.colorContrast.currentTextContrast) || 0;
+            currentContrastRatio.textContent = `(${currentContrast.toFixed(2)}:1)`;
+          } else {
+            currentContrastRatio.textContent = '(–)';
+          }
+        } else {
+          contrastFunctionTitle.textContent = 'color-contrast(–)';
+          newContrastRatio.textContent = '(–)';
+          currentContrastRatio.textContent = '(–)';
+        }
+
+        const isEnabled = textNodeData?.pluginData?.enabled === true;
+        applyColorContrastButton.classList.toggle('hidden', isEnabled);
+        disableColorContrastButton.classList.toggle('hidden', !isEnabled);
+      }
+
+      window.onmessage = async (event) => {
+        const data = event.data.pluginMessage;
+
+        switch (data.type) {
+          case 'SELECTION_CHANGE_TEXT_NODE':
+            updateTextNodeState(data);
+            break;
+
+          case 'SELECTION_CHANGE_CONTAINER_NODE':
+            updateTextNodeState({
+              textNodeData: null,
+              containerNodeData: data.containerNodeData
+            });
+            break;
+
+          case 'SELECTION_CHANGE_NO_NODE_SELECTED':
+            parent.postMessage({ pluginMessage: {
+              type: 'NAVIGATE',
+              route: 'editor-empty',
+              fromRoute: 'editor-active'
+            }}, '*');
+            break;
+        }
+      };
+
+      document.getElementById('apply-color-contrast').addEventListener('click', () => {
+        if (!containerNodeData) {
+          return;
+        }
+
+        // For container-only selections, we'll still need a text node to work with
+        // The backend should handle finding child text nodes
+        parent.postMessage({ pluginMessage: {
+          type: 'ENABLE_COLOR_CONTRAST_ON_SELECTED_NODE',
+          textNodeData: textNodeData || null,
+          containerNodeData: containerNodeData
+        }}, '*');
+      });
+
+      document.getElementById('disable-color-contrast').addEventListener('click', () => {
+        if (!containerNodeData) {
+          console.error('No container node data available');
+          return;
+        }
+
+        parent.postMessage({ pluginMessage: {
+          type: 'DISABLE_COLOR_CONTRAST_ON_SELECTED_NODE',
+          textNodeData: textNodeData || null,
+          containerNodeData: containerNodeData
+        }}, '*');
+      });
+
+      document.getElementById('help-button').addEventListener('click', () => {
+        parent.postMessage({ pluginMessage: {
+          type: 'NAVIGATE',
+          route: 'menu',
+          fromRoute: 'editor-active'
+        }}, '*');
+      });
+    </script>
+  </body>
+</html>

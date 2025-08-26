@@ -1,5 +1,6 @@
 import { NodeStateChangeEvent } from '../types/nodes';
 import { PluginToUIMessage } from '../types/messages';
+import { showUI } from '../utils/showUI';
 
 /**
  * Centralized message handler for plugin-to-UI communication.
@@ -18,12 +19,13 @@ export class MessageHandler {
   }
 
   /**
-   * Handles state changes and sends appropriate messages to the UI
+   * Handles state changes and routes to appropriate UI
    */
   public handleStateChange(stateEvent: NodeStateChangeEvent): void {
     switch (stateEvent.type) {
       case 'TEXT_NODE':
         if (stateEvent.data.textNodeData) {
+          showUI(__uiFiles__['editor-active']);
           this.postMessage({
             type: 'SELECTION_CHANGE_TEXT_NODE',
             textNodeData: stateEvent.data.textNodeData,
@@ -32,31 +34,21 @@ export class MessageHandler {
         }
         break;
 
-      case 'TEXT_NODE_NO_CONTAINER':
-        this.postMessage({
-          type: 'SELECTION_CHANGE_NO_NODE_SELECTED',
-          message: 'The selected text layer must be inside a frame, component, instance, group, or section.'
-        });
-        break;
-
       case 'CONTAINER_NODE':
         if (stateEvent.data.containerNodeData) {
+          showUI(__uiFiles__['editor-active']);
           this.postMessage({
             type: 'SELECTION_CHANGE_CONTAINER_NODE',
-            containerNodeData: stateEvent.data.containerNodeData,
-            textNodeData: []
+            textNodeData: [],
+            containerNodeData: stateEvent.data.containerNodeData
           });
         }
         break;
 
+      case 'TEXT_NODE_NO_CONTAINER':
       case 'NO_SELECTION':
       case 'UNSUPPORTED_NODE':
-        this.postMessage({
-          type: 'SELECTION_CHANGE_NO_NODE_SELECTED',
-          message: stateEvent.type === 'UNSUPPORTED_NODE'
-            ? 'Select a text layer to get started.'
-            : 'Select a text layer to get started.'
-        });
+        showUI(__uiFiles__['editor-empty']);
         break;
     }
   }

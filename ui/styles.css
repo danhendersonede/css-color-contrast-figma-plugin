@@ -1,253 +1,501 @@
-body {
-  background: var(--figma-color-bg);
-  color: var(--figma-color-text);
-  margin: 0;
-  font-family: "Readex Pro", "Inter", sans-serif;
-
-  /* Design tokens */
-  --cc-border-radius-md: 8px;
-  --cc-border-radius-sm: 4px;
-  --cc-spacing-md: 1rem;
-  --cc-spacing-sm: 0.5rem;
-  --cc-spacing-xs: 0.25rem;
-
-  --cc-font-size-xl: 2.5rem;
-  --cc-font-size-lg: 1.25rem;
-  --cc-font-size-md: 1.125rem;
-  --cc-font-size-sm: 1rem;
-  --cc-font-size-xs: 0.875rem;
-
-  --cc-button-border-radius: var(--cc-border-radius-md);
-  --cc-swatch-size: 56px;
-  --cc-swatch-size-small: 32px;
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+:root {
+  /* Color System */
+  --color-primary: #000000;
+  --color-primary-inverted: #ffffff;
+  --color-secondary: #ffffff;
+  --color-secondary-inverted: #000000;
+  --color-tertiary: #5a5a5a;
+  
+  /* Dynamic Theme Variables */
+  --theme-bg: #000000;
+  --theme-text: #ffffff;
+  --theme-stroke: #ffffff;
+  
+  /* Typography Scale */
+  --heading-lg-size: 2.375rem;        /* 38px */
+  --heading-lg-weight: 700;
+  --heading-lg-family: "Inclusive Sans", sans-serif;
+  
+  --paragraph-lg-size: 1.375rem;      /* 22px */
+  --paragraph-lg-weight: 400;
+  --paragraph-lg-family: "Inclusive Sans", sans-serif;
+  
+  --paragraph-md-size: 1.125rem; /* 18px */
+  --paragraph-md-bold-weight: 500;
+  --paragraph-md-bold-family: "Inclusive Sans", sans-serif;
+  
+  /* Code Typography */
+  --code-md-size: 1.125rem;           /* 18px */
+  --code-md-weight: 500;
+  --code-md-family: "Geist Mono", monospace;
+  --code-md-letter-spacing: -0.72px;
+  
+  /* Spacing System */
+  --spacing-sm: 0.25rem;              /* 4px */
+  --spacing-md: 0.5rem;               /* 8px */
+  --spacing-xl: 1.5rem;               /* 24px */
+  --spacing-xxl: 2rem;                /* 32px */
+  
+  /* Border Radius */
+  --border-radius-md: 0.625rem;       /* 10px */
+  
+  /* Component-Specific Tokens */
+  --button-border-radius: var(--border-radius-md);
+  --swatch-size: 3.5rem;              /* 56px */
+  --swatch-size-small: 2rem;          /* 32px */
+  --btn-secondary-hover: rgba(0, 0, 0, 0.1);
+  
+  /* Logo component sizing */
+  --logo-size: 100PX;              
 }
 
-/* Theme variations */
-.figma-light {
-  --figma-color-text-secondary: #666666;
-  --figma-color-bg-brand: #000000;
-}
-
-/* Reset and base styles */
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
 * {
   box-sizing: border-box;
 }
 
-/* Layout */
-main, #editor-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--cc-spacing-md);
-  height: 100vh;
+body {
+  background: var(--color-secondary);
+  color: var(--color-primary);
+  margin: 0;
+  font-family: "Inclusive Sans", "Inter", sans-serif;
 }
 
-main { 
-  padding: var(--cc-spacing-md);
-}
-
-main > div {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-}
-
-main > button, #editor-content > button {
-  margin-top: auto;
-}
-
-/* Navigation */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Typography */
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
 h1 {
   margin: 0;
-  font-weight: bold;
-  font-size: var(--cc-font-size-xl);
+  font-size: var(--heading-lg-size);
+  font-weight: var(--heading-lg-weight);
+  font-family: var(--heading-lg-family);
   line-height: 1;
+  letter-spacing: -1px;
 }
 
 h2 {
   margin: 0;
-  font-size: var(--cc-font-size-sm);
+  font-size: var(--paragraph-md-size);
 }
 
 h3 {
-  font-size: var(--cc-font-size-xs);
+  font-size: var(--paragraph-md-size);
   font-weight: 600;
   width: 100%;
-  border-bottom: 1px dashed var(--figma-color-border-strong);
-  margin: 0 0 var(--cc-spacing-xs) 0;
+  margin: 0 0 var(--spacing-sm) 0;
 }
 
 p {
   margin: 0;
+    font-size: var(--paragraph-md-size);
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 hgroup p {
   font-weight: 600;
-  font-size: var(--cc-font-size-md);
-  color: var(--figma-color-text-secondary);
+  font-size: var(--paragraph-lg-size);
+  color: var(--color-tertiary);
 }
 
-/* Lists */
 ul {
   margin: 0;
 }
 
-/* Buttons */
-button {
-  align-items: center;
-  appearance: none;
-  background-color: var(--figma-color-bg-brand);
-  border: none;
-  border-radius: var(--cc-button-border-radius);
-  color: var(--figma-color-text-onbrand);
-  cursor: pointer;
+/* ============================================
+   LAYOUT COMPONENTS
+   ============================================ */
+/* Navigation Bar */
+nav {
   display: flex;
-  fill: var(--figma-color-icon-onbrand);
-  min-height: 44px;
-  justify-content: center;
-  padding: 0 var(--cc-spacing-sm);
-  font-weight: bold;
-  font-size: var(--cc-font-size-lg);
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-button:hover {
-  background-color: var(--figma-color-bg-brand-hover);
-} 
+/* Header */
+.header {
+  padding: var(--spacing-xxl) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  height: 250px;
+  min-height: 250px;
+}
 
+.header.centered {
+  align-items: center;
+}
+
+.header p {
+  margin: 0;
+  font-size: var(--paragraph-lg-size);
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* ============================================
+   BUTTON SYSTEM
+   ============================================ */
+
+/* Base button class - shared foundation */
+.btn {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  
+  /* Typography */
+  font-family: "Inclusive Sans", "Inter", sans-serif;
+  text-decoration: none;
+  text-align: center;
+  
+  /* Interaction */
+  cursor: pointer;
+  
+  /* Box model */
+  border-radius: var(--button-border-radius);
+  box-sizing: border-box;
+  
+  /* Reset */
+  appearance: none;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+}
+
+/* Primary variant */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  border: none;
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  font-weight: bold;
+  font-size: var(--paragraph-lg-size);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* Secondary variant */
+.btn-secondary {
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
+  min-height: 36px;
+  padding: var(--spacing-md) calc(var(--spacing-md) * 2);
+  font-size: var(--paragraph-md-size);
+  font-weight: var(--paragraph-md-bold-weight);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Secondary buttons in dark contexts */
+.inverted .btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Icon support */
+.btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Special sizing */
 #help-button {
   min-height: 38px;
 }
 
-/* Groups and sections */
-.group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--cc-spacing-sm);
+/* ============================================
+   INVERTED THEME
+   ============================================ */
+
+/* Container with inverted color scheme */
+.inverted {
+  background: var(--color-secondary-inverted);
+  color: var(--color-primary-inverted);
 }
 
-.group > h2 {
-  background-color: var(--figma-color-bg-brand);
-  color: var(--figma-color-text-onbrand);
-  padding: var(--cc-spacing-xs) var(--cc-spacing-sm);
-  border-radius: var(--cc-border-radius-md) var(--cc-border-radius-md) 0 0;
+/* Dynamic theme for editor header */
+.header.theme-dynamic {
+  background: var(--theme-bg);
+  color: var(--theme-text);
 }
 
-/* Swatches */
-.swatch {
-  display: flex;
-  gap: var(--cc-spacing-sm);
+.header.theme-dynamic .btn-secondary {
+  border-color: var(--theme-stroke);
+  color: var(--theme-text);
 }
 
-.swatch-visual {
-  height: var(--cc-swatch-size);
-  width: var(--cc-swatch-size);
-  flex-shrink: 0;
-  border-radius: var(--cc-border-radius-sm);
-  border: 2px solid #000000;
-  font-size: 11px;
-  text-align: center;
-  display: flex;
-  align-items: end;
-  justify-content: center;
+.header.theme-dynamic .btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.swatch-visual.small {
-  height: var(--cc-swatch-size-small);
-  width: var(--cc-swatch-size-small);
+.header.theme-light .btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.swatch-details {
+/* ============================================
+   REUSABLE LAYOUT COMPONENTS
+   ============================================ */
+
+/* Container utilities */
+.container {
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.swatch .main-value {
-  font-size: 1.5rem;
-  font-weight: 600;
+.container.inset {
+  padding: var(--spacing-xl);
 }
 
-.swatch .sub-value {
-  font-size: 1rem;
-  color: var(--figma-color-text-secondary);
-  overflow-x: hidden;
-  text-wrap-mode: nowrap;
-  text-overflow: ellipsis;
-  width: 234px;
+.container.gap {
+  gap: var(--spacing-md);
 }
 
-#current-color .sub-value {
-  width: 250px;
-}
-
-/* New color swatch */
-#automatic-swatch > div {
-  display: flex;
-  gap: var(--cc-spacing-sm);
+.container.centered {
   align-items: center;
-  justify-content: space-between;
+}
+
+.container .btn-full {
+  margin-top: auto;
+}
+
+/* Logo component - reusable across screens */
+.logo {
+  width: var(--logo-size);
+  height: auto;
+  margin: var(--spacing-xl) 0 var(--spacing-sm) 0;
+}
+
+/* Button group layouts */
+.button-group {
+  display: flex;
+  gap: var(--spacing-xl);
   width: 100%;
 }
 
-#automatic-swatch-visual-white {
-  background-color: #FFFFFF;
-  border: 2px solid var(--figma-color-border-strong);
+.button-group.vertical {
+  flex-direction: column;
 }
 
-#automatic-swatch-visual-black {
-  background-color: #000000;
-  border: 2px solid var(--figma-color-border-strong);
-  color: #FFFFFF;
+.button-group.vertical .btn {
+    width: 100%;
 }
 
-#automatic-swatch-details {
-  font-size: var(--cc-font-size-sm);
-  font-weight: 600;
-  color: var(--figma-color-text-secondary);
+/* Full width button modifier */
+.btn-full {
+  width: 100%;
 }
 
-#automatic-swatch-details .new-color-swatch-value {
-  font-size: var(--cc-font-size-md);
-  color: var(--figma-color-text);
+/* ============================================
+   CODE STYLES
+   ============================================ */
+
+/* Inline code (within paragraphs) */
+code {
+  font-family: var(--code-md-family);
+  font-weight: var(--code-md-weight);
+  font-size: var(--code-md-size);
+  letter-spacing: var(--code-md-letter-spacing);
+  line-height: 1;
 }
 
-#automatic-swatch-details .new-color-swatch-value.largest {
-  background-color: var(--figma-color-bg-success-secondary);
-  color: var(--figma-color-text-onsuccess);
-  font-weight: bold;
-  font-size: var(--cc-font-size-lg);
-  padding: var(--cc-spacing-xs) var(--cc-spacing-sm);
-  border-radius: var(--cc-border-radius-sm);
+/* Code blocks (standalone examples) */
+.code-example {
+  margin: 0;
+  background: var(--color-tertiary);
+  color: var(--color-secondary);
+  padding: var(--spacing-md);
+  border-radius: var(--spacing-sm);
+  overflow-x: auto;
+  white-space: pre;
 }
 
-/* Enabled swatch */
-
-#disable-color-contrast {
-  background-color: var(--figma-color-bg-danger);
+.code-example code {
+  background: none;
+  padding: 0;
+  color: inherit;
 }
 
-#disable-color-contrast:hover {
-  background-color: var(--figma-color-bg-danger-hover);
+/* ============================================
+   EDITOR STYLES
+   ============================================ */
+
+.editor-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-/* Utility classes */
+/* Dynamic third circle stroke based on theme */
+.theme-dark .logo-circle-3 {
+  stroke: white !important;
+}
+
+.theme-light .logo-circle-3 {
+  stroke: black !important;
+}
+
+/* Hero content area */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* Color information blocks */
+.color-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.color-label {
+  margin: 0;
+  font-size: var(--paragraph-lg-size);
+  font-weight: 400;
+  color: var(--color-primary-inverted);
+  text-align: center;
+}
+
+/* Theme-specific color label */
+.theme-dynamic .color-label {
+  color: var(--theme-text);
+}
+
+/* Inline color display */
+.color-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.color-swatch {
+  width: 21px;
+  height: 21px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--theme-text);
+  flex-shrink: 0;
+}
+
+.color-value {
+  font-size: var(--paragraph-lg-size);
+  font-weight: 400;
+  color: var(--color-primary-inverted);
+}
+
+/* Theme-specific color value */
+.theme-dynamic .color-value {
+  color: var(--theme-text);
+}
+
+.contrast-ratio {
+  font-size: var(--paragraph-md-size);
+  font-weight: 400;
+  color: var(--color-primary-inverted);
+}
+
+/* Theme-specific contrast ratio */
+.theme-dynamic .contrast-ratio {
+  color: var(--theme-text);
+}
+
+/* Content section components */
+.contrast-title {
+  margin: 0;
+  font-family: var(--code-md-family);
+  font-weight: var(--code-md-weight);
+  font-size: var(--paragraph-md-size);
+  letter-spacing: var(--code-md-letter-spacing);
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.contrast-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.result-display {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.result-swatch {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-primary);
+  flex-shrink: 0;
+}
+
+.result-value {
+  font-size: var(--heading-lg-size);
+  font-weight: var(--heading-lg-weight);
+  color: var(--color-primary);
+  letter-spacing: -1.52px;
+}
+
+.contrast-comparison {
+  margin: 0;
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.ratio-new {
+  font-size: var(--paragraph-md-size);
+  font-weight: var(--paragraph-md-bold-weight);
+}
+
+.ratio-separator {
+  font-size: var(--paragraph-lg-size);
+  font-weight: 400;
+}
+
+.ratio-old {
+  font-size: var(--paragraph-md-size);
+  font-weight: 400;
+}
+
+.logo-small {
+  width: 40px;
+  height: auto;
+}
+
+.logo-small svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
 .hidden {
   display: none !important;
 }
 
 .center {
   text-align: center;
-}
-
-/* Error message */
-#error-message {
-  flex-grow: 1;
-  align-content: center;
-  text-align: center;
-  font-size: var(--cc-font-size-md);
 }

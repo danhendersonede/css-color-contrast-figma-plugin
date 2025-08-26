@@ -12,9 +12,8 @@ export function updateTextNodeColors(containerNode: ContainerNode, containerNode
       }
     }).filter(node => node.getSharedPluginData("color_contrast", "enabled") === "true");
   
-
     const textNodeData: TextNodeData[] = [];
-    textNodes.forEach(textNode => {
+    for (const textNode of textNodes) {
       const newChild = textNode.clone();
   
       newChild.fills = [{
@@ -39,7 +38,7 @@ export function updateTextNodeColors(containerNode: ContainerNode, containerNode
           containerNodeData: containerNodeData
         }
       });
-    });
+    }
 
     return textNodeData;
 }

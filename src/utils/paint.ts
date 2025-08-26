@@ -1,9 +1,27 @@
-import { FillColorData } from "../types/nodes";
+import { FillColorData, isContainerNode, ContainerNode } from "../types/nodes";
 import { RGBToHex } from "./color";
 
 export function hasSolidFill(node: BaseNode): boolean {
-    const fills = (node as { fills: readonly Paint[] }).fills;
-    return fills.length > 0 && fills[0].type === 'SOLID';
+    const fills = (node as { fills?: readonly Paint[] }).fills;
+    return !!(fills && fills.length > 0 && fills[0].type === 'SOLID');
+}
+
+/**
+ * Recursively searches up the parent hierarchy to find the first container node with a solid fill
+ * @param node - The starting node to search from
+ * @returns The first parent container node with a solid fill, or null if none found
+ */
+export function findParentWithSolidFill(node: BaseNode): ContainerNode | null {
+    let currentNode: BaseNode | null = node.parent;
+    
+    while (currentNode) {
+        if (isContainerNode(currentNode) && hasSolidFill(currentNode)) {
+            return currentNode;
+        }
+        currentNode = currentNode.parent;
+    }
+    
+    return null;
 }
 
 export async function getNodeFillColor(node: BaseNode): Promise<FillColorData> {
@@ -15,7 +33,7 @@ export async function getNodeFillColor(node: BaseNode): Promise<FillColorData> {
         };
     }
 
-    const fill = (node as { fills: readonly Paint[] }).fills[0] as SolidPaint;
+    const fill = (node as { fills?: readonly Paint[] }).fills![0] as SolidPaint;
 
     let variableName = null;
     if (fill.boundVariables && fill.boundVariables.color && fill.boundVariables.color.id) {

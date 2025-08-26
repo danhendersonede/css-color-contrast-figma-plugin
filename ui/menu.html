@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu - color-contrast()</title>
+</head>
+<body class="inverted">
+  <header class="header centered">
+    <nav>
+      <div></div>
+      <button class="btn btn-secondary" id="close-button">
+        Close
+      </button>
+    </nav>
+    
+    <div class="logo">
+      <svg viewBox="0 0 337 217" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="106.5" cy="108.5" r="86.5" fill="black" stroke="white" stroke-width="8"/>
+        <circle cx="168.5" cy="108.5" r="86.5" fill="#5A5A5A" stroke="white" stroke-width="8"/>
+        <circle cx="230.5" cy="108.5" r="86.5" fill="white" stroke="white" stroke-width="8"/>
+      </svg>
+    </div>
+    
+    <h1>color-contrast()</h1>
+  </header>
+  
+  <!-- Button group -->
+  <div class="container inset centered button-group vertical">
+    <button class="btn btn-secondary" id="tutorial-button">
+      Tutorial
+    </button>
+    <a href="https://caniuse.com/mdn-css_types_color_contrast-color" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+      Can I Use
+    </a>
+    <a href="https://github.com/danhendersonede/css-color-contrast-figma-plugin/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+      Feedback
+    </a>
+  </div>
+  
+  <script>
+    document.getElementById('close-button').onclick = () => {
+      parent.postMessage({ 
+        pluginMessage: { 
+          type: 'NAVIGATE',
+          route: 'editor-empty',
+          fromRoute: 'menu'
+        }
+      }, '*');
+    };
+    
+    document.getElementById('tutorial-button').onclick = () => {
+      parent.postMessage({ 
+        pluginMessage: { 
+          type: 'NAVIGATE',
+          route: 'intro1',
+          fromRoute: 'menu'
+        }
+      }, '*');
+    };
+  </script>
+</body>
+</html>

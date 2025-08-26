@@ -4,11 +4,16 @@ import { updateTextNodeColors } from "../utils/updateTextNodeColors";
 
 export async function onUpdateEnabledNodes() {
     try {
-        // Load current page
+        // Ensure we have a current page before attempting to load it
+        if (!figma.currentPage) {
+            console.log('No current page available');
+            figma.ui.postMessage({ type: 'UPDATE_COMPLETE', updatedNodes: 0, totalNodes: 0 });
+            return;
+        }
+
         await figma.currentPage.loadAsync();
         console.log('Current page loaded');
 
-        // Find all text nodes with color-contrast enabled
         const textNodes = figma.currentPage.findAllWithCriteria({
             types: ['TEXT'],
             sharedPluginData: {
@@ -26,7 +31,6 @@ export async function onUpdateEnabledNodes() {
         let updatedNodes = 0;
         let disabledNodes = 0;
     
-        // Update each text node's color based on its container
         for (const textNode of textNodes) {
             try {
                 const parent = textNode.parent;
@@ -44,7 +48,6 @@ export async function onUpdateEnabledNodes() {
                     continue;
                 }
 
-                // Check if node is part of a component or instance
                 if (parent.type === 'INSTANCE') {
                     console.log('Disabling color-contrast for node in component/instance:', textNode.id);
                     textNode.setSharedPluginData("color_contrast", "enabled", "false");
@@ -52,14 +55,12 @@ export async function onUpdateEnabledNodes() {
                     continue;
                 }
 
-                // Get current container data and update color contrast
                 const containerNodeData = await getContainerNodeData(parent);
                 const updatedTextNodes = updateTextNodeColors(parent, containerNodeData);
                 updatedNodes += updatedTextNodes.length;
 
             } catch (error) {
                 console.error('Error processing node:', textNode.id, error);
-                // Disable color-contrast if we can't process the node
                 try {
                     textNode.setSharedPluginData("color_contrast", "enabled", "false");
                     disabledNodes++;
